@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project>
+	<pomVersion>3</pomVersion>
+	<extend>../../project.xml</extend>
+	<name>Edia Template Skin Tool Pack</name>
+	<groupId>edia</groupId>
+	<id>edia-sakai-skinmanager-pack</id>
+	<currentVersion>${edia.sakai.skinmanager.version}</currentVersion>
+	<organization>
+		<name>Sakai Project</name>
+		<url>http://sakaiproject.org/</url>
+	</organization>
+	<inceptionYear>2006</inceptionYear>
+
+	<!-- you must deploy your pack to components -->
+	<properties>
+		<deploy.type>components</deploy.type>
+	</properties>
+
+	<dependencies>
+
+		<!-- the components pack should include your dao and logic impl 
+			in the war bundle and the components.xml file 
+			(which is basically a spring-config file with a special name -->
+
+		<dependency>
+			<groupId>edia</groupId>
+			<artifactId>edia-sakai-skinmanager-api-impl</artifactId>
+			<version>${edia.sakai.skinmanager.version}</version>
+			<properties>
+				<war.bundle>true</war.bundle>
+			</properties>
+		</dependency>
+
+		<dependency>
+			<groupId>edia</groupId>
+			<artifactId>edia-sakai-utils</artifactId>
+			<version>${edia.sakai.utils.version}</version>
+			<properties>
+				<war.bundle>true</war.bundle>
+			</properties>
+		</dependency>
+		<!-- generic DAO, put it in shared for use in Sakai 
+			<dependency>
+			<groupId>generic-dao</groupId>
+			<artifactId>generic-dao</artifactId>
+			<version>0.7</version>
+			<properties>
+			<deploy.target>shared</deploy.target>
+			</properties>
+			</dependency>
+		-->
+	</dependencies>
+
+	<build>
+		<sourceDirectory>src/java</sourceDirectory>
+	</build>
+</project>

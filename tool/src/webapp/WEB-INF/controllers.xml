@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	<bean id="flowContinuationStartController" class="nl.edia.masla.spring.webflow.SessionContinuationController">
+		<property name="view" value="skinmanager.spring"/>
+	</bean>
+
+	<bean name="flowController" class="org.springframework.webflow.executor.mvc.FlowController">
+		<property name="flowExecutor" ref="flowExecutor" />
+		<property name="defaultFlowId" value="skinmanager-main-flow" />
+	</bean>
+
+
+	<!-- Launches new flow executions and resumes existing executions: Spring 1.2 config version -->
+	<bean id="flowExecutor" class="org.springframework.webflow.config.FlowExecutorFactoryBean">
+		<property name="definitionLocator" ref="flowRegistry" />
+		<property name="executionAttributes">
+			<map>
+				<entry key="alwaysRedirectOnPause">
+					<value type="java.lang.Boolean">true</value>
+				</entry>
+			</map>
+		</property>
+		<property name="repositoryType" value="CONTINUATION" />
+	</bean>
+
+	<!-- Creates the registry of flow definitions for this application: Spring 1.2 config version -->
+	<bean id="flowRegistry" class="org.springframework.webflow.engine.builder.xml.XmlFlowRegistryFactoryBean">
+         <property name="flowDefinitions">
+             <value>
+                 skinmanager-main-flow=/WEB-INF/flows/skinmanager-main-flow.xml
+                 skinmanager-detail-flow=/WEB-INF/flows/skinmanager-detail-flow.xml
+                 skinmanager-new-flow=/WEB-INF/flows/skinmanager-new-flow.xml
+             </value>
+         </property>	
+	</bean>
+	
+	<import resource="flows/skinmanager-beans.xml"/>
+
+</beans>

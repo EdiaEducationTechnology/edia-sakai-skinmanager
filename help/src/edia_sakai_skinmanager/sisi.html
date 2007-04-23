@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>Skin Manager: System Administrator Info</title>
+<style type="text/css">
+		/* Style for specific inline images */
+		
+		/* Style for specific ordered lists */
+		
+		/* Style for specific table cells */
+		</style>
+<link type="text/css" href="/library/skin/tool_base.css" media="all"
+	rel="stylesheet" />
+<link type="text/css" href="/library/skin/default/tool.css" media="all"
+	rel="stylesheet" />
+</head>
+<body>
+<div class="helpBody">
+<h2>Skin Manager: Admin Info</h2>
+<p>This section contains all the information a system administrator
+needs to know.</p>
+
+<h3>The configuration file <strong>sakai.properties</strong></h3>
+<p>The Edia Skin Manager does obey the sakai.properties settings
+for the skin. That is, it obeys the default skin name (<strong>skin.default</strong>)
+and it does use the (<strong>skin.repo</strong>) setting to seek in the
+skin on the filesystem.</p>
+
+<h3>File system access</h3>
+<div class="alertMessage">Beware: This skin manager updates
+skins on the file system.</div>
+<p>This tool accesses the file system to manage the skins. It does
+this by searching in &lt;CATALINA_HOME&gt;/webapps. Any system that
+places the skins in any other place, for instance by apache
+configuration, will be incompatible with this tool. Please provide us
+with a requirements request if you would like specific extra setting to
+be configured. The skin tool does check if the configured directories
+look like skin directories.</p>
+
+<h3>Security</h3>
+<p>This tool accesses the file system of the sakai instalation. We
+do not like it anymore than any good administrator does. Therefore, we
+took special care writing it. The code is open source, so please read it
+in case of curiosity or doubt, and inform us first if you find any
+serious flaw.</p>
+<p>The skin home is checked for the images subdir and the
+tool_base.css. Supposedly skin dirs are checked for tool.css, portal.css
+and the images subdir. This way, the tool makes sure it is
+updating/creating/deleting files on places it should. Of course, all
+directories are driven by the configuration parameters you provide.</p>
+<p>Furthermore, the tool checks the contents of the zip file it is
+unpacking, and makes sure no files "escape" their installation location.</p>
+
+<h3>The skin archive</h3>
+<p>This tool keeps all skins it ever comes in touch with in a
+database. The zipped versions of the skins are stored in a blob. This
+means that the database has all the skins and the database is leading
+when it comes to what skins are installed. At system startup, the tool
+looks for the skin directory.</p>
+<ul>
+	<li>If there are skins that do exist in the database, but do exist
+	on the file system, a database entry is made for that skin.</li>
+	<li>If the database has a skin that does not exist, it will
+	install the latest version of that skin on the file system.</li>
+	<li>Skins that exist in both, but differ, will not be
+	synchronized. We strongly discourage changing skins via the file system
+	and manage the by the skin tool at the same time.</li>
+</ul>
+
+
+<h3>Clustering</h3>
+<p>Clustering is, in case of this tool, difficult, unless the skin
+directory is shared along the machines in the cluster. Installing skins
+in a cluster needs to be kept in sync between the installed instances
+anyway, so people using their own skins in a clustered environment are
+already aware of this problem. If the problem becomes really emergent
+(an institution wanting to manage hundreds of skins in a cluster) we
+just might develop a "database only" version of this skin that does not
+depend on the filesystem at all.</p>
+
+
+</div>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<import resource="controllers.xml" />
+	<import resource="interceptors.xml" />
+	<bean id="handlerMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="interceptors">
+			<list>
+				<ref bean="sessionContinuationHandlerInterceptor" />
+			</list>
+		</property>
+		<property name="mappings">
+			<props>
+				<prop key="skinmanager.spring">flowController</prop>
+			</props>
+		</property>
+		<property name="defaultHandler" ref="flowContinuationStartController" />
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix">
+			<value>WEB-INF/jsp/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+
+	<!-- 
+		Support for multipart requests using commons file upload
+		Make sure you have the commons-fileupload.jar in your classpath
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="5242880" />
+		<property name="defaultEncoding" value="UTF-8"></property>
+	</bean>
+	-->
+	<!-- 
+		Error handler
+	-->
+	<bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="defaultErrorView" value="error"/>
+		<property name="exceptionAttribute" value="rootCauseException"/>
+	</bean>
+	<!-- 
+		Locale resolver
+	-->
+	<bean id="localeResolver" class="nl.edia.masla.spring.web.servlet.SakaiLocaleResolver">
+	</bean>
+	
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename" value="Messages-SkinManager"/>
+		<property name="useCodeAsDefaultMessage" value="true"/>
+	</bean>
+	
+	
+</beans>
