@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+		"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  		"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="nl.edia.sakai.tool.skinmanager.model.SkinArchive" table="edia_skinmanager_achive">
+		<id name="id" type="long">
+			<generator class="native"/>
+		</id>
+		<property name="name" type="string" length="64"/>
+		<property name="lastModified" />
+		<property name="version" not-null="true"/>
+		<property name="comment" length="55" not-null="false"/>
+		<property name="file" type="java.sql.Blob" length="67108864"> 
+        </property>
+		<property name="active" />
+	</class>
+</hibernate-mapping>
