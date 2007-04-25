@@ -76,7 +76,7 @@ public class SkinServiceImpl implements SkinService {
 		skinFileSystemService.createSkin(name, new ByteArrayInputStream(myFileData));
 		createArchive(name, myFileData);
 
-		SakaiUtils.spawnModificationEvent(Permissions.PERMISSION_EDIA_SAKAI_SKININSTALL_CREATE, "skin:" + name);
+		SakaiUtils.createModificationEvent(Permissions.PERMISSION_EDIA_SAKAI_SKININSTALL_CREATE, "skin:" + name);
 	}
 
 	/* (non-Javadoc)
@@ -117,7 +117,7 @@ public class SkinServiceImpl implements SkinService {
 	 */
 	public SkinDirectory findSkin(String id) throws SkinException, IOException {
 		checkAction(Permissions.PERMISSION_EDIA_SAKAI_SKININSTALL_VIEW);
-		SakaiUtils.spawnEvent(Permissions.PERMISSION_EDIA_SAKAI_SKININSTALL_VIEW, "skin:" + id);
+		SakaiUtils.createEvent(Permissions.PERMISSION_EDIA_SAKAI_SKININSTALL_VIEW, "skin:" + id);
 		return skinFileSystemService.findSkin(id);
 	}
 
@@ -266,7 +266,7 @@ public class SkinServiceImpl implements SkinService {
 		if (!isInUse(name)) {
 			skinFileSystemService.removeSkin(name);
 			skinArchiveService.removeSkinArchive(name);
-			SakaiUtils.spawnModificationEvent(Permissions.PERMISSION_EDIA_SAKAI_SKININSTALL_DELETE, "skin:" + name);
+			SakaiUtils.createModificationEvent(Permissions.PERMISSION_EDIA_SAKAI_SKININSTALL_DELETE, "skin:" + name);
 		} else {
 			throw new SkinInUseException("SkinDirectory '" + name + "' is in use and cannot be deleted");
 		}
@@ -354,7 +354,7 @@ public class SkinServiceImpl implements SkinService {
 		checkAction(Permissions.PERMISSION_EDIA_SAKAI_SKININSTALL_EDIT);
 		skinFileSystemService.updateSkin(name, new ByteArrayInputStream(myFileData));
 		createArchive(name, myFileData);
-		SakaiUtils.spawnModificationEvent(Permissions.PERMISSION_EDIA_SAKAI_SKININSTALL_VIEW, "skin:" + name);
+		SakaiUtils.createModificationEvent(Permissions.PERMISSION_EDIA_SAKAI_SKININSTALL_VIEW, "skin:" + name);
 	}
 
 }

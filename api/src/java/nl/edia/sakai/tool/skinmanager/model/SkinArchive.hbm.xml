@@ -8,12 +8,12 @@
 		<id name="id" type="long">
 			<generator class="native"/>
 		</id>
-		<property name="name" type="string" length="64"/>
-		<property name="lastModified" />
-		<property name="version" not-null="true"/>
-		<property name="comment" length="55" not-null="false"/>
-		<property name="file" type="java.sql.Blob" length="67108864"> 
+		<property name="name" column="skin_name" type="string" length="64"/>
+		<property name="lastModified" column="skin_lastModified"/>
+		<property name="version" column="skin_version" not-null="true"/>
+		<property name="comment" column="skin_comment" length="55" not-null="false"/>
+		<property name="file"    column="skin_file" type="java.sql.Blob" length="67108864"> 
         </property>
-		<property name="active" />
+		<property name="active" column="skin_active"/>
 	</class>
 </hibernate-mapping>

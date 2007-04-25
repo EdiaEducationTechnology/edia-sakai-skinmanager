@@ -57,41 +57,45 @@ import nl.edia.sakai.tool.skinmanager.SkinPrerequisitesNonFatalException;
 import nl.edia.sakai.tool.skinmanager.model.SkinDirectory;
 import nl.edia.sakai.tool.skinmanager.model.SkinFile;
 
-public class SkinFileSystemServiceImpl implements
-		SkinFileSystemService {
+public class SkinFileSystemServiceImpl implements SkinFileSystemService {
 
 	private static final Pattern PATTERN_CSS = Pattern.compile("^[^/]+\\.css$");
 
-	private static final Pattern PATTERN_IMAGES_DIR_CONTENT = Pattern.compile("^images/.+\\.(gif|jpg|jpeg|png|tif|tiff)$");
+	private static final Pattern PATTERN_IMAGES_DIR_CONTENT = Pattern
+			.compile("^images/.+\\.(gif|jpg|jpeg|png|tif|tiff)$");
 
-	private static final Pattern PATTERN_IMAGES_DIR_EMPTY = Pattern.compile("^images/$");
+	private static final Pattern PATTERN_IMAGES_DIR_EMPTY = Pattern
+			.compile("^images/$");
 
-	Pattern[] includePattern = new Pattern[] { 
-			PATTERN_CSS,
-			PATTERN_IMAGES_DIR_EMPTY, 
-			PATTERN_IMAGES_DIR_CONTENT 
-	};
+	Pattern[] includePattern = new Pattern[] { PATTERN_CSS,
+			PATTERN_IMAGES_DIR_EMPTY, PATTERN_IMAGES_DIR_CONTENT };
 
-	Pattern[] directoryPattern = new Pattern[] { 
-			PATTERN_IMAGES_DIR_EMPTY, 
-			PATTERN_IMAGES_DIR_CONTENT 
-	};
+	Pattern[] directoryPattern = new Pattern[] { PATTERN_IMAGES_DIR_EMPTY,
+			PATTERN_IMAGES_DIR_CONTENT };
 
-	static final Log log = LogFactory
-			.getLog(SkinFileSystemServiceImpl.class);
+	static final Log log = LogFactory.getLog(SkinFileSystemServiceImpl.class);
 
-	public void createSkin(String name, InputStream data)
-			throws SkinException, IOException {
+	public void createSkin(String name, InputStream data) throws SkinException,
+			IOException {
 
 		File file = createTempZip(data);
-		validateSkinZip(file);
-		File mySkinDir = prepareSkinDir(name, false);
-		installSkin(mySkinDir, file);
-		file.delete();
+		File mySkinDir = null;
+		boolean isSucceeded = false;
+		try {
+			validateSkinZip(file);
+			mySkinDir = prepareSkinDir(name, false);
+			installSkin(mySkinDir, file);
+			isSucceeded = true;
+		} finally {
+			file.delete();
+			if (!isSucceeded && mySkinDir != null && mySkinDir.isDirectory()) {
+				FileSystemUtils.purge(mySkinDir);
+			}
+		}
 	}
 
-	public List<SkinDirectory> fetchInstalledSkins()
-			throws SkinException, IOException {
+	public List<SkinDirectory> fetchInstalledSkins() throws SkinException,
+			IOException {
 		File mySkinHome = getSkinHome();
 		File[] mySkins = mySkinHome.listFiles(new FileFilter() {
 
@@ -109,32 +113,34 @@ public class SkinFileSystemServiceImpl implements
 			}
 
 		}
-		Collections.sort(myFoundSkins, new Comparator<SkinDirectory>(){
+		Collections.sort(myFoundSkins, new Comparator<SkinDirectory>() {
 
 			public int compare(SkinDirectory o1, SkinDirectory o2) {
 				return o1.getName().compareToIgnoreCase(o2.getName());
 			}
-			
+
 		});
 		return myFoundSkins;
 	}
 
-	public SkinDirectory findSkin(String id) throws SkinException,
-			IOException {
+	public SkinDirectory findSkin(String id) throws SkinException, IOException {
 		return createSkinValueObject(getSkinDir(id));
 	}
 
-	public void removeSkin(String name) throws SkinException,
-			IOException {
+	public void removeSkin(String name) throws SkinException, IOException {
 		removeSkinDir(name);
 	}
 
-	public void updateSkin(String name, InputStream data)
-			throws SkinException, IOException {
+	public void updateSkin(String name, InputStream data) throws SkinException,
+			IOException {
 		File file = createTempZip(data);
-		validateSkinZip(file);
-		File mySkinDir = prepareSkinDir(name, true);
-		installSkin(mySkinDir, file);
+		try {
+			validateSkinZip(file);
+			File mySkinDir = prepareSkinDir(name, true);
+			installSkin(mySkinDir, file);
+		} finally {
+			file.delete();
+		}
 	}
 
 	protected void createFile(ZipEntry zipEntry, File file, ZipFile myZipFile)
@@ -145,7 +151,7 @@ public class SkinFileSystemServiceImpl implements
 			log.warn("Skipping file entry: " + myEntryName + "");
 			return;
 		}
-		
+
 		if (PATTERN_IMAGES_DIR_CONTENT.matcher(myEntryName).matches()) {
 			File myParentDir = file.getParentFile();
 			if (!myParentDir.exists()) {
@@ -278,8 +284,7 @@ public class SkinFileSystemServiceImpl implements
 
 	}
 
-	protected File getSkinDir(String name) throws SkinException,
-			IOException {
+	protected File getSkinDir(String name) throws SkinException, IOException {
 		File mySkinHome = getSkinHome();
 		if (mySkinHome != null) {
 			return new File(mySkinHome, name);
@@ -391,8 +396,8 @@ public class SkinFileSystemServiceImpl implements
 	//
 	// }
 
-	protected void installSkin(File skinDir, File file)
-			throws SkinException, IOException {
+	protected void installSkin(File skinDir, File file) throws SkinException,
+			IOException {
 		ZipFile myZipFile = null;
 		try {
 			myZipFile = new ZipFile(file);
@@ -420,8 +425,8 @@ public class SkinFileSystemServiceImpl implements
 		File mySkinDir = getSkinDir(name);
 		if (mySkinDir.exists()) {
 			if (!mySkinDir.isDirectory()) {
-				throw new SkinException("Unexepected file found '"
-						+ mySkinDir + "'");
+				throw new SkinException("Unexepected file found '" + mySkinDir
+						+ "'");
 			}
 			if (!overWrite) {
 				throw new CannotOverwriteException(
@@ -430,8 +435,8 @@ public class SkinFileSystemServiceImpl implements
 				validateSkinDir(mySkinDir);
 				boolean myDeleted = FileSystemUtils.purge(mySkinDir);
 				if (!myDeleted) {
-					throw new SkinException(
-							"Cannot remove existing skin '" + mySkinDir + "'");
+					throw new SkinException("Cannot remove existing skin '"
+							+ mySkinDir + "'");
 				}
 			}
 		}
@@ -439,22 +444,20 @@ public class SkinFileSystemServiceImpl implements
 		if (!mySkinDir.exists()) {
 			boolean myMakeDir = mySkinDir.mkdirs();
 			if (!myMakeDir) {
-				throw new SkinException(
-						"Cannot create skin directory '" + mySkinDir + "'");
+				throw new SkinException("Cannot create skin directory '"
+						+ mySkinDir + "'");
 			}
 		}
 
 		return mySkinDir;
 	}
 
-	protected void removeSkinDir(String name) throws SkinException,
-			IOException {
+	protected void removeSkinDir(String name) throws SkinException, IOException {
 		File mySkinDir = getSkinDir(name);
 		validateSkinDir(mySkinDir);
 		boolean myDeleted = FileSystemUtils.purge(mySkinDir);
 		if (!myDeleted) {
-			throw new SkinException("Couldn't remove skin '"
-					+ mySkinDir + "'");
+			throw new SkinException("Couldn't remove skin '" + mySkinDir + "'");
 		}
 
 	}
@@ -480,7 +483,8 @@ public class SkinFileSystemServiceImpl implements
 						isToolFound = true;
 					} else if (myName.equals("portal.css")) {
 						isPortalFound = true;
-					} else if (PATTERN_IMAGES_DIR_CONTENT.matcher(myName).matches()) {
+					} else if (PATTERN_IMAGES_DIR_CONTENT.matcher(myName)
+							.matches()) {
 						isImagesFound = true;
 					}
 				} else {
@@ -572,42 +576,19 @@ public class SkinFileSystemServiceImpl implements
 		out.closeEntry();
 		in.close();
 	}
-
-	protected void validateSkinDir(File dir) throws SkinException,
-			IOException {
-		if (dir.isDirectory()) {
-			boolean isToolFound = false;
-			boolean isPortalFound = false;
-			boolean isImagesFound = false;
-			File[] myListFiles = dir.listFiles();
-			for (int i = 0; i < myListFiles.length; i++) {
-				File myFile = myListFiles[i];
-				String myName = myFile.getName();
-				if (!myFile.isDirectory()) {
-					if (myName.equals("tool.css")) {
-						isToolFound = true;
-					} else if (myName.equals("portal.css")) {
-						isPortalFound = true;
-					}
-				} else {
-					if (myName.startsWith("images")) {
-						isImagesFound = true;
-					}
-				}
-
-			}
-			if (!isPortalFound) {
-				throw getInvalidSkinDirException("portal.css", false);
-			}
-			if (!isToolFound) {
-				throw getInvalidSkinDirException("tool.css", false);
-			}
-			if (!isImagesFound) {
-				throw getInvalidSkinDirException("images", true);
-			}
-		} else {
-			throw new InvalidSkinDirException("Not a directory: " + dir);
+	/**
+	 * Checks if a dir is a valid skin directory, this means, a subdir
+	 * of the skin directory.
+	 * @param dir
+	 * @throws SkinException
+	 * @throws IOException
+	 */
+	protected void validateSkinDir(File dir) throws SkinException, IOException {
+		File mySkinHome = getSkinHome();
+		if (dir.isDirectory() && FileSystemUtils.equals(mySkinHome, dir.getParentFile())) {
+			return;
 		}
+		throw new InvalidSkinDirException("Not a skin directory: " + dir);
 	}
 
 }
