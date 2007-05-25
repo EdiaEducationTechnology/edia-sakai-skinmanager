@@ -50,7 +50,7 @@
       <input type="hidden" name="_flowExecutionKey" value="${flowExecutionKey}"/>
       <input type="hidden" name="_eventId" id="_eventId" value="back"/>		
     	<p class="act">
-	      <input type="submit" class="button" value="<spring:message  code="page.history.action.back"/>"/>
+	      <input type="submit" class="active" value="<spring:message  code="page.history.action.back"/>"/>
 	    </p>
 	  </form>      
 	</div>

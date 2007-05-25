@@ -33,7 +33,7 @@
 	    		<input type="file" name="file" id="file" /><br/>
     		</p>
    			<p class="act">
-      			<input type="submit" class="button" value="<spring:message  code="page.new.action.submit"/>"/>
+      			<input type="submit" class="active" value="<spring:message  code="page.new.action.submit"/>"/>
 	      		<input type="submit" class="button" onclick="document.getElementById('_eventId').value='cancel';" value="<spring:message  code="page.new.action.cancel"/>"/>
       		</p>
     	</form>	

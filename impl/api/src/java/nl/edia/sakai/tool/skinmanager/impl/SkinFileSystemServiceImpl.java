@@ -1,7 +1,7 @@
 /*
  * $Author: roland $
- * $Revision: 1309 $
- * $Date: 2007-04-17 00:09:13 +0200 (di, 17 apr 2007) $
+ * $Revision: 1382 $
+ * $Date: 2007-04-25 00:15:31 +0200 (Wed, 25 Apr 2007) $
  * 
  * Edia Project edia-sakai-skin-manager
  * Copyright (C) 2007 Roland, Edia Educatie Technologie

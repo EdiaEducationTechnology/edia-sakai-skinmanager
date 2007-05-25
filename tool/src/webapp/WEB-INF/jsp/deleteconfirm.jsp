@@ -15,7 +15,7 @@
       <input type="hidden" name="_flowExecutionKey" value="${flowExecutionKey}"/>
       <input type="hidden" name="_eventId" id="_eventId" value="no"/>
     	<p class="act">
-	      <input type="submit" class="button" value="Yes" onclick="document.getElementById('_eventId').value='yes';"/>
+	      <input type="submit" class="active" value="Yes" onclick="document.getElementById('_eventId').value='yes';"/>
 	      <input type="submit" class="button" value="No"/>
       </p>
     </form>	
