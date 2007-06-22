@@ -46,6 +46,7 @@ import java.util.zip.ZipOutputStream;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.sakaiproject.component.cover.ServerConfigurationService;
+import org.springframework.util.StringUtils;
 
 import nl.edia.sakai.tool.skinmanager.CannotOverwriteException;
 import nl.edia.sakai.tool.skinmanager.InvalidPackageException;
