@@ -293,27 +293,39 @@ public class SkinFileSystemServiceImpl implements SkinFileSystemService {
 	}
 
 	protected File getSkinHome() throws SkinException, IOException {
-		String myRepoLoction = ServerConfigurationService
-				.getString("skin.repo");
-		if (myRepoLoction == null) {
-			myRepoLoction = "/library/skin";
-		}
-
 		File mySkinHome = null;
-		File myCatalina = getCatalinaHome();
-		File myWebApp = new File(myCatalina, "webapps");
-		if (myWebApp.isDirectory()) {
-			File mySkinHomeTmp = new File(myWebApp, myRepoLoction);
-			if (mySkinHomeTmp.isDirectory()) {
-				mySkinHome = mySkinHomeTmp;
+		// SM-1: Read the sakai.properties directive
+		String myHomePath = ServerConfigurationService.getString("skin.filesystem.path");
+		if (StringUtils.hasText(myHomePath)) {
+			mySkinHome = new File(myHomePath);
+			if (!mySkinHome.isDirectory()) {
+				throw new SkinPrerequisitesNonFatalException("Cannot find skin home: '" + mySkinHome + "'");
+			} else if (!mySkinHome.canRead()) {
+				throw new SkinPrerequisitesNonFatalException("Cannot read skin home: '" + mySkinHome + "'");
 			}
 		}
-		if (mySkinHome == null) {
-			// This is a non-fatal: the skin dir can be unavailable / not
-			// deployed yet
-			throw new SkinPrerequisitesNonFatalException(
-					"Cannot find skin home: '" + myCatalina.getCanonicalPath()
-							+ "/webapps/library/skin'");
+		// Use tomcat home
+		else {
+
+			String myRepoLoction = ServerConfigurationService.getString("skin.repo");
+			if (StringUtils.hasText(myRepoLoction)) {
+				myRepoLoction = "/library/skin";
+			}
+
+			File myCatalina = getCatalinaHome();
+			File myWebApp = new File(myCatalina, "webapps");
+			if (myWebApp.isDirectory()) {
+				File mySkinHomeTmp = new File(myWebApp, myRepoLoction);
+				if (mySkinHomeTmp.isDirectory()) {
+					mySkinHome = mySkinHomeTmp;
+				}
+			}
+			if (mySkinHome == null) {
+				// This is a non-fatal: the skin dir can be unavailable / not
+				// deployed yet
+				throw new SkinPrerequisitesNonFatalException("Cannot find skin home: '" + myCatalina.getCanonicalPath()
+				    + "/webapps/library/skin'");
+			}
 		}
 		File[] listFiles = mySkinHome.listFiles();
 		boolean isImagesFound = false;
@@ -322,24 +334,19 @@ public class SkinFileSystemServiceImpl implements SkinFileSystemService {
 			File myFile = listFiles[i];
 			if (myFile.isDirectory() && myFile.getName().equals("images")) {
 				isImagesFound = true;
-			} else if (myFile.isFile()
-					&& myFile.getName().equals("tool_base.css")) {
+			} else if (myFile.isFile() && myFile.getName().equals("tool_base.css")) {
 				isToolBaseCssFound = true;
 			}
 		}
 
 		if (!isImagesFound) {
 			// This is a non-fatal: the skin dir can be not deployed yet
-			throw new SkinPrerequisitesNonFatalException(
-					"Cannot find required skin images directory: '"
-							+ myCatalina.getCanonicalPath()
-							+ "/webapps/library/skin/images'");
+			throw new SkinPrerequisitesNonFatalException("Cannot find required skin images directory: '" + mySkinHome
+			    + "/images'");
 		}
 		if (!isToolBaseCssFound) {
-			throw new SkinPrerequisitesNonFatalException(
-					"Cannot find required skin tool_base.css: '"
-							+ myCatalina.getCanonicalPath()
-							+ "/webapps/library/skin/tool_base.css'");
+			throw new SkinPrerequisitesNonFatalException("Cannot find required skin tool_base.css: '" + mySkinHome
+			    + "/tool_base.css'");
 
 		}
 		return mySkinHome;
