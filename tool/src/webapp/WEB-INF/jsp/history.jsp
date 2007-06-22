@@ -22,7 +22,7 @@
 			<th><spring:message  code="page.history.label.version"/></th>
 			<th><spring:message  code="page.history.label.lastModified"/></th>
 			<est:allowed permission="skinmanager.edit">
-				<th>Action</th>
+				<th><spring:message  code="page.history.label.action"/></th>
 			</est:allowed>
 			<c:forEach var="item" items="${history}" varStatus="status">
 				<tr>
@@ -34,15 +34,19 @@
 							<est:allowed permission="skinmanager.edit">
 								<td>
 									<a href="skinmanager.spring?_flowExecutionKey=${flowExecutionKey}&amp;_eventId=revert&amp;version=${item.version}"><spring:message  code="page.history.action.revert"/></a>	
+									|
+									<a href="skindownload.spring?id=${item.name}&amp;version=${item.version}"><spring:message  code="page.history.action.download"/></a>
 								</td>			
 							</est:allowed>
 						</c:when>
 						<c:otherwise>
 							<td>
-							&nbsp;
+								<a href="skindownload.spring?id=${item.name}&amp;version=${item.version}"><spring:message  code="page.history.action.download"/></a>	
 							</td>
 						</c:otherwise>
-					</c:choose>	
+					</c:choose>
+					<td>
+					</td>
 				</tr>
 			</c:forEach>
 		</table>

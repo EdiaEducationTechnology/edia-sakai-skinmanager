@@ -3,7 +3,7 @@
 <beans>
 
 	<bean id="nl.edia.sakai.tool.skinmanager.FlowContinuationStartController" class="nl.edia.masla.spring.webflow.SessionContinuationController">
-		<property name="view" value="skinmanager.spring"/>
+		<property name="view" value="skinmanager.spring" />
 	</bean>
 
 	<bean name="nl.edia.sakai.tool.skinmanager.FlowController" class="org.springframework.webflow.executor.mvc.FlowController">
@@ -11,6 +11,10 @@
 		<property name="defaultFlowId" value="skinmanager-main-flow" />
 	</bean>
 
+	<bean id="nl.edia.sakai.tool.skinmanager.download.SkinDowloadController" class="nl.edia.sakai.tool.skinmanager.download.SkinDowloadController">
+		<property name="skinArchiveService" ref="nl.edia.sakai.tool.skinmanager.SkinArchiveService" />
+		<property name="errorView" value="accessdenied" />
+	</bean>
 
 	<!-- Launches new flow executions and resumes existing executions: Spring 1.2 config version -->
 	<bean id="nl.edia.sakai.tool.skinmanager.FlowExecutor" class="org.springframework.webflow.config.FlowExecutorFactoryBean">
@@ -27,15 +31,14 @@
 
 	<!-- Creates the registry of flow definitions for this application: Spring 1.2 config version -->
 	<bean id="nl.edia.sakai.tool.skinmanager.FlowRegistry" class="org.springframework.webflow.engine.builder.xml.XmlFlowRegistryFactoryBean">
-         <property name="flowDefinitions">
-             <value>
-                 skinmanager-main-flow=/WEB-INF/flows/skinmanager-main-flow.xml
-                 skinmanager-detail-flow=/WEB-INF/flows/skinmanager-detail-flow.xml
-                 skinmanager-new-flow=/WEB-INF/flows/skinmanager-new-flow.xml
-             </value>
-         </property>	
+		<property name="flowDefinitions">
+			<value>
+				skinmanager-main-flow=/WEB-INF/flows/skinmanager-main-flow.xml skinmanager-detail-flow=/WEB-INF/flows/skinmanager-detail-flow.xml
+				skinmanager-new-flow=/WEB-INF/flows/skinmanager-new-flow.xml
+			</value>
+		</property>
 	</bean>
-	
-	<import resource="flows/skinmanager-beans.xml"/>
+
+	<import resource="flows/skinmanager-beans.xml" />
 
 </beans>
