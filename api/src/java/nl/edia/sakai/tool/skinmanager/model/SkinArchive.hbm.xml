@@ -4,7 +4,7 @@
   		"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-	<class name="nl.edia.sakai.tool.skinmanager.model.SkinArchive" table="edia_skinmanager_achive">
+	<class name="nl.edia.sakai.tool.skinmanager.model.SkinArchive" table="edia_skinmanager_archive">
 		<id name="id" type="long">
 			<generator class="native"/>
 		</id>
