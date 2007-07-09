@@ -112,7 +112,7 @@ public class SkinFileSystemServiceImpl implements SkinFileSystemService {
 			if (looksLikeSkinDir(myFile)) {
 				myFoundSkins.add(createSkinValueObject(myFile));
 			} else {
-				log.info("Skipping directory '" + myFile + "', it does not seem a valid skin directory");
+				log.debug("Skipping directory '" + myFile + "', it does not seem a valid skin directory");
 			}
 
 		}
