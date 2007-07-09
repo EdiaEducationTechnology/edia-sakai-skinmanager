@@ -85,7 +85,7 @@ public class SkinArchiveServiceImpl extends HibernateDaoSupport implements SkinA
 						.add(
 								Restrictions
 										.sqlRestriction(" {alias}.skin_version = ("
-												+ " select max(sa.skin_version) from edia_skinmanager_achive sa where sa.skin_name = {alias}.skin_name "
+												+ " select max(sa.skin_version) from edia_skinmanager_archive sa where sa.skin_name = {alias}.skin_name "
 												+ " ) "));
 				return myCriteria.list();
 			}
