@@ -108,9 +108,11 @@ public class SkinFileSystemServiceImpl implements SkinFileSystemService {
 				mySkins.length - 1);
 		for (int i = 0; i < mySkins.length; i++) {
 			File myFile = mySkins[i];
-			String myName = myFile.getName();
-			if (!"images".equals(myName)) {
+			
+			if (looksLikeSkinDir(myFile)) {
 				myFoundSkins.add(createSkinValueObject(myFile));
+			} else {
+				log.info("Skipping directory '" + myFile + "', it does not seem a valid skin directory");
 			}
 
 		}
@@ -122,6 +124,27 @@ public class SkinFileSystemServiceImpl implements SkinFileSystemService {
 
 		});
 		return myFoundSkins;
+	}
+
+	private boolean looksLikeSkinDir(File myFile) {
+		boolean isToolFound = false;
+		boolean isPortalFound = false;
+		boolean isImagesFound = false;
+		
+		File[] listFiles = myFile.listFiles();
+		for (int i = 0; i < listFiles.length; i++) {
+			File file = listFiles[i];
+			String name = file.getName();
+			if (file.isFile() && name.equals("tool.css")) {
+				isToolFound = true;
+			} else if (file.isFile() && name.equals("portal.css")) {
+				isPortalFound = true;
+			} else if (file.isDirectory() &&  name.equals("images")) {
+				isImagesFound = true;
+			}
+		}
+		
+		return isToolFound && isPortalFound && isImagesFound;
 	}
 
 	public SkinDirectory findSkin(String id) throws SkinException, IOException {
