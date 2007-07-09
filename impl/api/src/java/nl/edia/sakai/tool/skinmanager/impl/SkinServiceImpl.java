@@ -218,7 +218,7 @@ public class SkinServiceImpl implements SkinService {
 				ByteArrayOutputStream myOutputStream = new ByteArrayOutputStream();
 				skinFileSystemService.writeSkinData(myName, myOutputStream);
 				ByteArrayInputStream myInputStream = new ByteArrayInputStream(myOutputStream.toByteArray());
-				skinArchiveService.createSkinArchive(myName, myInputStream, mySkinDirectory.getLastModified(), "Syncronzied with filesystem");
+				skinArchiveService.createSkinArchive(myName, myInputStream, mySkinDirectory.getLastModified(), "Synchronized with filesystem");
 				log.info("Skin archive created from filesystem: " + mySkinDirectory.getName());
 			}
 		}
@@ -227,11 +227,15 @@ public class SkinServiceImpl implements SkinService {
 			String myName = myArchive.getName();
 			if (!myInstalledSkinNames.contains(myName)) {
 				if (isArchiveLeading) {
-					ByteArrayOutputStream myOutputStream = new ByteArrayOutputStream();
-					skinArchiveService.fetchSkinArchiveData(myName, myOutputStream);
-					skinFileSystemService.createSkin(myName, new ByteArrayInputStream(myOutputStream
-							.toByteArray()));
-					log.warn("Skin archive missing on filesystem, installed on FS: " + myName);
+					try {
+						ByteArrayOutputStream myOutputStream = new ByteArrayOutputStream();
+						skinArchiveService.fetchSkinArchiveData(myName, myOutputStream);
+						skinFileSystemService.createSkin(myName, new ByteArrayInputStream(myOutputStream
+								.toByteArray()));
+						log.warn("Skin archive missing on filesystem, installed on FS: " + myName);
+					} catch (Exception e) {
+						log.warn(e);
+					}
 				} else {
 					log.info("Skin archive removed form DB / not on filesystem: " + myName);
 					skinArchiveService.removeSkinArchive(myName);
