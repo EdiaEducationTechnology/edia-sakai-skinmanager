@@ -38,13 +38,6 @@
 		</bean>
 	-->
 	<!-- 
-		Error handler
-	-->
-	<bean id="nl.edia.sakai.tool.skinmanager.ExceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
-		<property name="defaultErrorView" value="error" />
-		<property name="exceptionAttribute" value="rootCauseException" />
-	</bean>
-	<!-- 
 		Locale resolver
 	-->
 	<bean id="nl.edia.sakai.tool.skinmanager.LocaleResolver" class="nl.edia.masla.spring.web.servlet.SakaiLocaleResolver"></bean>

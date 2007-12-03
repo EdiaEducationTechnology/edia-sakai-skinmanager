@@ -50,6 +50,17 @@ public interface SkinService {
 	 */
 	public List<SkinDirectory> fetchInstalledSkins() throws SkinException, IOException;
 	
+
+	/**
+	 * <p>
+	 * Gets all installed skin names. 
+	 * </p>
+	 * @throws SkinException, in case of any configuration problem, usually when the skin dir cannot
+	 * be found or is unreadable.
+	 * @throws IOException, in case of any IO error. Should be handled as unexpected and unrecovable. 
+	 */
+	public List<String> fetchInstalledSkinNames() throws SkinException, IOException;
+
 	/**
 	 * Gets the archive for a given skin
 	 */

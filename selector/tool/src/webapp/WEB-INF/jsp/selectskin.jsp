@@ -27,7 +27,7 @@
 			<label for="${status.expression}"> <strong><s:message code="label.${status.expression}" /></strong> </label>
 			<select name="${status.expression}">
 				<c:forEach var="skin" items="${skins}">
-					<option value="${skin.name}" ${skin.name == status.value ? "selected=\"selected\"" : ""}">${skin.name}</option>
+					<option value="${skin}" ${skin == status.value ? "selected=\"selected\"" : ""}">${skin}</option>
 				</c:forEach>
 			</select>
 		</s:bind>

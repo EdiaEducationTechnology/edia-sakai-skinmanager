@@ -79,7 +79,7 @@ public class SkinSelectorController extends SimpleFormController {
 	protected Map<String, Object> referenceData(HttpServletRequest request) throws Exception {
 		Map<String, Object> myData = new HashMap<String, Object>();
 		// Into page context: skins
-		myData.put("skins", skinService.fetchInstalledSkins());
+		myData.put("skins", skinService.fetchInstalledSkinNames());
 		// Into page context: hasPermission, this var is not a simple permission, but one of 3, see 
 		// the source of org.sakaiproject.site.impl.BaseSiteService#save for details
 		myData.put("hasPermission", SakaiUtils.hasPermission(SiteService.SECURE_UPDATE_SITE) || SakaiUtils.hasPermission(SiteService.SECURE_UPDATE_SITE_MEMBERSHIP)
