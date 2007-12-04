@@ -88,6 +88,20 @@ public class SkinServiceImpl implements SkinService {
 	}
 
 	/* (non-Javadoc)
+	 * @see nl.edia.sakai.tool.skinmanager.SkinService#fetchInstalledSkinNames()
+	 */
+	public List<String> fetchInstalledSkinNames() throws SkinException, IOException {
+		// Maybe a bit fanatic, but at least check if the user is supposed to be here
+		checkAction(org.sakaiproject.site.api.SiteService.SITE_VISIT);
+		List<SkinDirectory> myFetchInstalledSkins = skinFileSystemService.fetchInstalledSkins();
+		List<String> myList = new ArrayList<String>(myFetchInstalledSkins.size());
+		for (SkinDirectory mySkinDirectory : myFetchInstalledSkins) {
+			myList.add(mySkinDirectory.getName());
+        }
+		return myList;
+	}
+
+	/* (non-Javadoc)
 	 * @see nl.edia.sakai.tool.skinmanager.SkinService#fetchSkinArchive(java.lang.String)
 	 */
 	public SkinArchive fetchSkinArchive(String name) throws SkinException, IOException {

@@ -3,20 +3,17 @@
 
 <beans>
 	<import resource="controllers.xml" />
-	<import resource="interceptors.xml" />
 	<bean id="nl.edia.sakai.tool.skinmanager.HandlerMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
 		<property name="interceptors">
 			<list>
-				<ref bean="nl.edia.sakai.tool.skinmanager.SessionContinuationHandlerInterceptor" />
 			</list>
 		</property>
 		<property name="mappings">
 			<props>
-				<prop key="skinmanager.spring">nl.edia.sakai.tool.skinmanager.FlowController</prop>
-				<prop key="skindownload.spring">nl.edia.sakai.tool.skinmanager.download.SkinDowloadController</prop>
+				<prop key="index.spring">nl.edia.sakai.tool.skinselector.SkinSelectorController</prop>
 			</props>
 		</property>
-		<property name="defaultHandler" ref="nl.edia.sakai.tool.skinmanager.FlowContinuationStartController" />
+		<property name="defaultHandler" ref="nl.edia.sakai.tool.skinselector.SkinSelectorController" />
 	</bean>
 
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -30,20 +27,12 @@
 	</bean>
 
 	<!-- 
-		Support for multipart requests using commons file upload
-		Make sure you have the commons-fileupload.jar in your classpath
-	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<property name="maxUploadSize" value="5242880" />
-		<property name="defaultEncoding" value="UTF-8"></property>
-		</bean>
-	-->
-	<!-- 
 		Locale resolver
 	-->
 	<bean id="nl.edia.sakai.tool.skinmanager.LocaleResolver" class="nl.edia.masla.spring.web.servlet.SakaiLocaleResolver"></bean>
 
 	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
-		<property name="basename" value="Messages-SkinManager" />
+		<property name="basename" value="Messages-SkinSelector" />
 		<property name="useCodeAsDefaultMessage" value="true" />
 	</bean>
 
