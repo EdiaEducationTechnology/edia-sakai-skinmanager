@@ -5,7 +5,7 @@
 	<extend>../master/project.xml</extend>
 	<name>Edia Skin Install Tool</name>
 	<groupId>edia</groupId>
-	<currentVersion>${edia.sakai.skinmanager.version}</currentVersion>
+	<currentVersion>${sakai.version}</currentVersion>
 	<organization>
 		<name>Edia Educatie Technologie</name>
 		<url>http://www.edia.nl/</url>
