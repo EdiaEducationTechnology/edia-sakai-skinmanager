@@ -6,7 +6,7 @@
 	<name>Edia Template Skin Tool Pack</name>
 	<groupId>edia</groupId>
 	<id>edia-sakai-skinmanager-pack</id>
-	<currentVersion>${edia.sakai.skinmanager.version}</currentVersion>
+	<currentVersion>${sakai.version}</currentVersion>
 	<organization>
 		<name>Sakai Project</name>
 		<url>http://sakaiproject.org/</url>
@@ -27,7 +27,7 @@
 		<dependency>
 			<groupId>edia</groupId>
 			<artifactId>edia-sakai-skinmanager-api-impl</artifactId>
-			<version>${edia.sakai.skinmanager.version}</version>
+			<version>${sakai.version}</version>
 			<properties>
 				<war.bundle>true</war.bundle>
 			</properties>

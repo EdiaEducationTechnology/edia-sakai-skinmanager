@@ -6,7 +6,7 @@
 	<name>Edia Template Tool model API</name>
 	<groupId>edia</groupId>
 	<id>edia-sakai-skinmanager-api</id>
-	<currentVersion>${edia.sakai.skinmanager.version}</currentVersion>
+	<currentVersion>${sakai.version}</currentVersion>
 	<organization>
 		<name>Sakai Project</name>
 		<url>http://sakaiproject.org/</url>

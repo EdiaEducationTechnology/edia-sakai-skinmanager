@@ -6,7 +6,7 @@
 	<name>Edia Skin Selector Tool</name>
 	<groupId>edia</groupId>
 	<id>edia-sakai-skinselector-tool</id>
-	<currentVersion>${edia.sakai.skinmanager.version}</currentVersion>
+	<currentVersion>${sakai.version}</currentVersion>
 	<organization>
 		<name>Sakai Foundation</name>
 		<url>http://sakaiproject.org/</url>
@@ -87,7 +87,7 @@
 		<dependency>
 			<groupId>edia</groupId>
 			<artifactId>edia-sakai-skinmanager-api</artifactId>
-			<version>${edia.sakai.skinmanager.version}</version>
+			<version>${sakai.version}</version>
 		</dependency>
 
 		<!-- Various Sakai dependencies -->

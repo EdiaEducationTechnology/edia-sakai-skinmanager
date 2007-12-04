@@ -6,7 +6,7 @@
     <name>Sakai Assignments Help</name>
     <groupId>edia</groupId>
     <id>edia-sakai-skinmanager-help</id>
-    <currentVersion>${edia.sakai.skinmanager.version}</currentVersion>
+    <currentVersion>${sakai.version}</currentVersion>
 
     <properties>
         <deploy.type>jar</deploy.type>
