@@ -30,128 +30,66 @@
       <groupId>servletapi</groupId>
       <artifactId>servletapi</artifactId>
       <version>2.4</version>
+      <scope>provided</scope>
     </dependency>
     <!-- Spring dependencies. -->
     <dependency>
       <groupId>${sakai.spring.groupId}</groupId>
       <artifactId>${sakai.spring.artifactId}</artifactId>
       <version>${sakai.spring.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-webflow</artifactId>
-      <version>1.0.1</version>
-      <!--properties:  war.bundle: true -->
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-binding</artifactId>
-      <version>1.0.1</version>
-      <!--properties:  war.bundle: true -->
-    </dependency>
-    <dependency>
-      <groupId>ognl</groupId>
-      <artifactId>ognl</artifactId>
-      <version>2.6.9</version>
-      <!--properties:  war.bundle: true -->
+      <scope>provided</scope>
     </dependency>
     <!-- our tool internal dependencies -->
     <dependency>
       <groupId>nl.edia</groupId>
       <artifactId>edia-sakai-skinmanager-api</artifactId>
       <version>${sakai.version}</version>
-    </dependency>
-    <!-- Various Sakai dependencies -->
-    <dependency>
-      <groupId>org.sakaiproject</groupId>
-      <artifactId>sakai-authz-api</artifactId>
-      <version>${sakai.version}</version>
+      <scope>provided</scope>
     </dependency>
     <!-- this is needed to use the ServerConfigurationService -->
     <dependency>
       <groupId>org.sakaiproject</groupId>
       <artifactId>sakai-component-api</artifactId>
       <version>${sakai.version}</version>
+      <scope>provided</scope>
     </dependency>
-    <!-- this is needed to access the SqlService
-			
-			<dependency>
-			<groupId>org.sakaiproject</groupId>
-			<artifactId>sakai-db-api</artifactId>
-			<version>${sakai.version}</version>
-			</dependency>
-			-->
+    <!-- Various Sakai dependencies -->
     <dependency>
       <groupId>org.sakaiproject</groupId>
-      <artifactId>sakai-entity-api</artifactId>
+      <artifactId>sakai-authz-api</artifactId>
       <version>${sakai.version}</version>
+      <scope>provided</scope>
     </dependency>
-    <!--
-			<dependency>
-			<groupId>org.sakaiproject</groupId>
-			<artifactId>sakai-event-api</artifactId>
-			<version>${sakai.version}</version>
-			</dependency> -->
     <dependency>
       <groupId>org.sakaiproject</groupId>
       <artifactId>sakai-site-api</artifactId>
       <version>${sakai.version}</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.sakaiproject</groupId>
-      <artifactId>sakai-site-impl</artifactId>
+      <artifactId>sakai-entity-api</artifactId>
       <version>${sakai.version}</version>
-      <!--properties:  war.bundle: true -->
-    </dependency>
-    <dependency>
-      <groupId>org.sakaiproject</groupId>
-      <artifactId>sakai-tool-api</artifactId>
-      <version>${sakai.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.sakaiproject</groupId>
-      <artifactId>sakai-user-api</artifactId>
-      <version>${sakai.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.sakaiproject</groupId>
-      <artifactId>sakai-util</artifactId>
-      <version>${sakai.version}</version>
-      <!--properties:  war.bundle: true -->
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.sakaiproject</groupId>
       <artifactId>sakai-util-api</artifactId>
       <version>${sakai.version}</version>
+      <scope>provided</scope>
     </dependency>
     <!-- Commons JARS put in shared/lib by Sakai -->
     <dependency>
       <groupId>commons-lang</groupId>
       <artifactId>commons-lang</artifactId>
       <version>${sakai.commons.lang.version}</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>commons-logging</groupId>
       <artifactId>commons-logging</artifactId>
       <version>1.0.4</version>
-    </dependency>
-    <!-- Apache Commons file upload used by inputFileUpload tag and associated filter -->
-    <dependency>
-      <groupId>commons-fileupload</groupId>
-      <artifactId>commons-fileupload</artifactId>
-      <version>1.0</version>
-    </dependency>
-    <!-- in shared/lib -->
-    <dependency>
-      <groupId>jstl</groupId>
-      <artifactId>jstl</artifactId>
-      <version>1.1.2</version>
-    </dependency>
-    <dependency>
-      <groupId>taglibs</groupId>
-      <artifactId>standard</artifactId>
-      <version>1.1.2</version>
-      <!--properties:  war.bundle: true -->
+      <scope>provided</scope>
     </dependency>
   </dependencies>
   <build>
