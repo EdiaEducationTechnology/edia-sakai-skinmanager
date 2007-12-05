@@ -12,19 +12,51 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/authz-api"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/tool-api"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/util-api"/>
-	<classpathentry kind="var" path="MAVEN_REPO/org.springframework/jars/spring-1.2.8.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/edia-sakai-utils"/>
-	<classpathentry kind="var" path="MAVEN_REPO/org.springframework/jars/spring-webflow-1.0.1.jar" sourcepath="/JAVA_LIBRARY/spring-webflow-1.0.1/spring-webflow-src-1.0.1.zip"/>
-	<classpathentry kind="var" path="MAVEN_REPO/org.springframework/jars/spring-binding-1.0.1.jar" sourcepath="/JAVA_LIBRARY/spring-webflow-1.0.1/spring-binding-src-1.0.1.zip"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/site-api"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/entity-api"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/event-api"/>
-	<classpathentry kind="var" path="MAVEN_REPO/hibernate/jars/hibernate-3.1.3.jar" sourcepath="/JAVA_LIBRARY/hibernate-3.1.3/hibernate-3.1/src"/>
-	<classpathentry kind="var" path="MAVEN_REPO/commons-logging/jars/commons-logging-1.0.4.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/component-api"/>
-	<classpathentry kind="var" path="MAVEN_REPO/taglibs/jars/standard-1.1.2.jar"/>
-	<classpathentry kind="var" path="MAVEN_REPO/jstl/jars/jstl-1.1.2.jar"/>
-	<classpathentry kind="var" path="MAVEN_REPO/commons-fileupload/jars/commons-fileupload-1.0.jar" sourcepath="/JAVA_LIBRARY/commons-fileupload-1.0/src/java"/>
-	<classpathentry kind="var" path="MAVEN_REPO/servletapi/jars/servletapi-2.4.jar"/>
+	<classpathentry kind="var" path="M2_REPO/nl/edia/edia-sakai-utils/M2/edia-sakai-utils-M2.jar"/>
+	<classpathentry kind="var" path="M2_REPO/javax/servlet/servlet-api/2.4/servlet-api-2.4.jar" sourcepath="M2_REPO/javax/servlet/servlet-api/2.4/servlet-api-2.4-sources.jar"/>
+	<classpathentry kind="var" path="M2_REPO/javax/servlet/jsp-api/2.0/jsp-api-2.0.jar"/>
+	<classpathentry kind="var" path="M2_REPO/commons-logging/commons-logging/1.0.4/commons-logging-1.0.4.jar" sourcepath="M2_REPO/commons-logging/commons-logging/1.0.4/commons-logging-1.0.4-sources.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-core/2.0.2/spring-core-2.0.2.jar"/>
+	<classpathentry kind="var" path="M2_REPO/taglibs/standard/1.1.2/standard-1.1.2.jar" sourcepath="M2_REPO/taglibs/standard/1.1.2/standard-1.1.2-sources.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/sakaiproject/sakai-site-api/M2/sakai-site-api-M2.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/sakaiproject/sakai-tool-api/M2/sakai-tool-api-M2.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-beans/2.0.2/spring-beans-2.0.2.jar"/>
+	<classpathentry kind="var" path="M2_REPO/commons-fileupload/commons-fileupload/1.0/commons-fileupload-1.0.jar" sourcepath="M2_REPO/commons-fileupload/commons-fileupload/1.0/commons-fileupload-1.0-sources.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/springframework/spring/2.0.6/spring-2.0.6.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/sakaiproject/sakai-db-storage/M2/sakai-db-storage-M2.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-binding/1.0.1/spring-binding-1.0.1.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/sakaiproject/sakai-entity-util/M2/sakai-entity-util-M2.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/sakaiproject/sakai-entity-api/M2/sakai-entity-api-M2.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-webflow/1.0.1/spring-webflow-1.0.1.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/sakaiproject/sakai-util/M2/sakai-util-M2.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/sakaiproject/sakai-util-api/M2/sakai-util-api-M2.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/sakaiproject/sakai-tool-util/M2/sakai-tool-util-M2.jar"/>
+	<classpathentry kind="var" path="M2_REPO/commons-lang/commons-lang/2.1/commons-lang-2.1.jar" sourcepath="M2_REPO/commons-lang/commons-lang/2.1/commons-lang-2.1-sources.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/sakaiproject/sakai-user-api/M2/sakai-user-api-M2.jar"/>
+	<classpathentry kind="var" path="M2_REPO/junit/junit/3.8.1/junit-3.8.1.jar" sourcepath="M2_REPO/junit/junit/3.8.1/junit-3.8.1-sources.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/sakaiproject/sakai-site-impl/M2/sakai-site-impl-M2.jar"/>
+	<classpathentry kind="var" path="M2_REPO/ognl/ognl/2.6.9/ognl-2.6.9.jar"/>
+	<classpathentry kind="var" path="M2_REPO/javax/servlet/jstl/1.1.2/jstl-1.1.2.jar" sourcepath="M2_REPO/javax/servlet/jstl/1.1.2/jstl-1.1.2-sources.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/sakaiproject/sakai-authz-api/M2/sakai-authz-api-M2.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/sakaiproject/sakai-component-api/M2/sakai-component-api-M2.jar"/>
+	<classpathentry kind="var" path="M2_REPO/aopalliance/aopalliance/1.0/aopalliance-1.0.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-context/2.0.2/spring-context-2.0.2.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-web/2.0.2/spring-web-2.0.2.jar"/>
+	<classpathentry kind="var" path="M2_REPO/antlr/antlr/2.7.6/antlr-2.7.6.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/hibernate/hibernate/3.2.5.ga/hibernate-3.2.5.ga.jar"/>
+	<classpathentry kind="var" path="M2_REPO/javax/transaction/jta/1.0.1B/jta-1.0.1b.jar"/>
+	<classpathentry kind="var" path="M2_REPO/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar"/>
+	<classpathentry kind="var" path="M2_REPO/net/sf/ehcache/ehcache/1.3.0/ehcache-1.3.0.jar"/>
+	<classpathentry kind="var" path="M2_REPO/net/sf/jsr107cache/jsr107cache/1.0/jsr107cache-1.0.jar"/>
+	<classpathentry kind="var" path="M2_REPO/commons-collections/commons-collections/3.1/commons-collections-3.1.jar" sourcepath="M2_REPO/commons-collections/commons-collections/3.1/commons-collections-3.1-sources.jar"/>
+	<classpathentry kind="var" path="M2_REPO/cglib/cglib/2.1_3/cglib-2.1_3.jar"/>
+	<classpathentry kind="var" path="M2_REPO/asm/asm/1.5.3/asm-1.5.3.jar"/>
+	<classpathentry kind="var" path="M2_REPO/backport-util-concurrent/backport-util-concurrent/3.0/backport-util-concurrent-3.0.jar"/>
+	<classpathentry kind="var" path="M2_REPO/asm/asm-attrs/1.5.3/asm-attrs-1.5.3.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

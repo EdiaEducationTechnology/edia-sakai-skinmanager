@@ -8,7 +8,7 @@
     <relativePath>../pom.xml</relativePath>
   </parent>
   <name>Edia Template Tool model API</name>
-  <groupId>edia</groupId>
+  <groupId>nl.edia</groupId>
   <artifactId>edia-sakai-skinmanager-api</artifactId>
   <organization>
     <name>Sakai Project</name>
@@ -23,9 +23,10 @@
   </properties>
   <dependencies>
     <dependency>
-      <groupId>sakaiproject</groupId>
+      <groupId>org.sakaiproject</groupId>
       <artifactId>sakai-site-api</artifactId>
       <version>${sakai.version}</version>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
   <build>

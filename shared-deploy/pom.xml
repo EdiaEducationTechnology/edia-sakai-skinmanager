@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>edia-sakai-skin-manager</artifactId>
+		<groupId>nl.edia</groupId>
+		<version>M2</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+	<description>Shared Deployment Descriptor for MetaObj</description>
+	<name>edia-edurep-shared-deploy</name>
+	<groupId>nl.edia</groupId>
+	<artifactId>edia-edurep-shared-deploy</artifactId>
+	<packaging>pom</packaging>
+	<properties>
+		<deploy.target>shared</deploy.target>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>taglibs</groupId>
+			<artifactId>standard</artifactId>
+			<version>1.1.2</version>
+		</dependency>
+	</dependencies>
+</project>

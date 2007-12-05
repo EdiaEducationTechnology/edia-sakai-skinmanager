@@ -8,7 +8,7 @@
     <relativePath>../../pom.xml</relativePath>
   </parent>
   <name>Edia Template Skin Tool Pack</name>
-  <groupId>edia</groupId>
+  <groupId>nl.edia</groupId>
   <artifactId>edia-sakai-skinmanager-pack</artifactId>
   <organization>
     <name>Sakai Project</name>
@@ -25,27 +25,17 @@
 			in the war bundle and the components.xml file 
 			(which is basically a spring-config file with a special name -->
     <dependency>
-      <groupId>edia</groupId>
+      <groupId>nl.edia</groupId>
       <artifactId>edia-sakai-skinmanager-api-impl</artifactId>
       <version>${sakai.version}</version>
       <!--properties:  war.bundle: true -->
     </dependency>
     <dependency>
-      <groupId>edia</groupId>
+      <groupId>nl.edia</groupId>
       <artifactId>edia-sakai-utils</artifactId>
-      <version>${edia.sakai.utils.version}</version>
+      <version>${sakai.version}</version>
       <!--properties:  war.bundle: true -->
     </dependency>
-    <!-- generic DAO, put it in shared for use in Sakai 
-			<dependency>
-			<groupId>generic-dao</groupId>
-			<artifactId>generic-dao</artifactId>
-			<version>0.7</version>
-			<properties>
-			<deploy.target>shared</deploy.target>
-			</properties>
-			</dependency>
-		-->
   </dependencies>
   <build>
     <resources/>

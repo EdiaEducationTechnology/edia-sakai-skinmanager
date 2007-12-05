@@ -8,7 +8,7 @@
     <relativePath>../pom.xml</relativePath>
   </parent>
   <name>Sakai Assignments Help</name>
-  <groupId>edia</groupId>
+  <groupId>nl.edia</groupId>
   <artifactId>edia-sakai-skinmanager-help</artifactId>
   <packaging>jar</packaging>
   <properties>

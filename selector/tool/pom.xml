@@ -8,7 +8,7 @@
     <relativePath>../../pom.xml</relativePath>
   </parent>
   <name>Edia Skin Selector Tool</name>
-  <groupId>edia</groupId>
+  <groupId>nl.edia</groupId>
   <artifactId>edia-sakai-skinselector-tool</artifactId>
   <organization>
     <name>Sakai Foundation</name>
@@ -20,9 +20,9 @@
     <!-- The sakaiproject plugin let's us build our tool without building
 			the entire sakai code base -->
     <dependency>
-      <groupId>edia</groupId>
+      <groupId>nl.edia</groupId>
       <artifactId>edia-sakai-utils</artifactId>
-      <version>${edia.sakai.utils.version}</version>
+      <version>${sakai.version}</version>
       <!--properties:  war.bundle: true -->
     </dependency>
     <!-- we are running a webapp in tomcat so we need the servlet api -->
@@ -57,70 +57,70 @@
     </dependency>
     <!-- our tool internal dependencies -->
     <dependency>
-      <groupId>edia</groupId>
+      <groupId>nl.edia</groupId>
       <artifactId>edia-sakai-skinmanager-api</artifactId>
       <version>${sakai.version}</version>
     </dependency>
     <!-- Various Sakai dependencies -->
     <dependency>
-      <groupId>sakaiproject</groupId>
+      <groupId>org.sakaiproject</groupId>
       <artifactId>sakai-authz-api</artifactId>
       <version>${sakai.version}</version>
     </dependency>
     <!-- this is needed to use the ServerConfigurationService -->
     <dependency>
-      <groupId>sakaiproject</groupId>
+      <groupId>org.sakaiproject</groupId>
       <artifactId>sakai-component-api</artifactId>
       <version>${sakai.version}</version>
     </dependency>
     <!-- this is needed to access the SqlService
 			
 			<dependency>
-			<groupId>sakaiproject</groupId>
+			<groupId>org.sakaiproject</groupId>
 			<artifactId>sakai-db-api</artifactId>
 			<version>${sakai.version}</version>
 			</dependency>
 			-->
     <dependency>
-      <groupId>sakaiproject</groupId>
+      <groupId>org.sakaiproject</groupId>
       <artifactId>sakai-entity-api</artifactId>
       <version>${sakai.version}</version>
     </dependency>
     <!--
 			<dependency>
-			<groupId>sakaiproject</groupId>
+			<groupId>org.sakaiproject</groupId>
 			<artifactId>sakai-event-api</artifactId>
 			<version>${sakai.version}</version>
 			</dependency> -->
     <dependency>
-      <groupId>sakaiproject</groupId>
+      <groupId>org.sakaiproject</groupId>
       <artifactId>sakai-site-api</artifactId>
       <version>${sakai.version}</version>
     </dependency>
     <dependency>
-      <groupId>sakaiproject</groupId>
+      <groupId>org.sakaiproject</groupId>
       <artifactId>sakai-site-impl</artifactId>
       <version>${sakai.version}</version>
       <!--properties:  war.bundle: true -->
     </dependency>
     <dependency>
-      <groupId>sakaiproject</groupId>
+      <groupId>org.sakaiproject</groupId>
       <artifactId>sakai-tool-api</artifactId>
       <version>${sakai.version}</version>
     </dependency>
     <dependency>
-      <groupId>sakaiproject</groupId>
+      <groupId>org.sakaiproject</groupId>
       <artifactId>sakai-user-api</artifactId>
       <version>${sakai.version}</version>
     </dependency>
     <dependency>
-      <groupId>sakaiproject</groupId>
+      <groupId>org.sakaiproject</groupId>
       <artifactId>sakai-util</artifactId>
       <version>${sakai.version}</version>
       <!--properties:  war.bundle: true -->
     </dependency>
     <dependency>
-      <groupId>sakaiproject</groupId>
+      <groupId>org.sakaiproject</groupId>
       <artifactId>sakai-util-api</artifactId>
       <version>${sakai.version}</version>
     </dependency>
