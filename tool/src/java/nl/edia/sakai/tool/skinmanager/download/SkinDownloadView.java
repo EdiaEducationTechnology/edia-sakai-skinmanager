@@ -40,8 +40,12 @@ public class SkinDownloadView implements View {
 	 * @param myName
 	 */
 	protected void setHeaders(HttpServletResponse response, String myName) {
-		response.setContentType("application/zip");
+		response.setContentType(getContentType());
 		response.setHeader("Content-Disposition", "attachment; filename=" + myName + ".zip");
+	}
+
+	public String getContentType() {
+		return "application/zip";
 	}
 
 	public SkinArchiveService getSkinArchiveService() {
@@ -51,5 +55,5 @@ public class SkinDownloadView implements View {
 	public void setSkinArchiveService(SkinArchiveService skinArchiveService) {
 		this.skinArchiveService = skinArchiveService;
 	}
-
+	
 }
