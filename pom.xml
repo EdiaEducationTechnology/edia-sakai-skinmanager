@@ -20,5 +20,6 @@
 		<module>help</module>
 		<module>api</module>
 		<module>tool</module>
+		<module>shared-deploy</module>
 	</modules>
 </project>
