@@ -7,7 +7,7 @@
     <version>M2</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
-  <name>Edia Template Tool model API</name>
+  <name>Edia Skin Manager Model API</name>
   <groupId>nl.edia</groupId>
   <artifactId>edia-sakai-skinmanager-api</artifactId>
   <organization>

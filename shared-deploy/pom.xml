@@ -3,14 +3,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<artifactId>edia-sakai-skin-manager</artifactId>
-		<groupId>nl.edia</groupId>
+		<groupId>org.sakaiproject</groupId>
 		<version>M2</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
-	<description>Shared Deployment Descriptor for MetaObj</description>
-	<name>edia-edurep-shared-deploy</name>
+	<description>Shared Deployment Descriptor for Edia Skin Manager</description>
+	<name>Edia Skin Manager Shared Deployment</name>
 	<groupId>nl.edia</groupId>
-	<artifactId>edia-edurep-shared-deploy</artifactId>
+	<artifactId>edia-sakai-skinmanager-shared-deploy</artifactId>
 	<packaging>pom</packaging>
 	<properties>
 		<deploy.target>shared</deploy.target>

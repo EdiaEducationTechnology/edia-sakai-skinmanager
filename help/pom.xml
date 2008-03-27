@@ -7,7 +7,7 @@
     <version>M2</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
-  <name>Sakai Assignments Help</name>
+  <name>Edia Skin Manager Help</name>
   <groupId>nl.edia</groupId>
   <artifactId>edia-sakai-skinmanager-help</artifactId>
   <packaging>jar</packaging>

@@ -7,7 +7,7 @@
     <version>M2</version>
     <relativePath>../../pom.xml</relativePath>
   </parent>
-  <name>Edia Template Skin Tool Pack</name>
+  <name>Edia Skin Manager Tool Pack</name>
   <groupId>nl.edia</groupId>
   <artifactId>edia-sakai-skinmanager-pack</artifactId>
   <organization>
