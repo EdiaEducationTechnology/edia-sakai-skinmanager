@@ -169,11 +169,12 @@
 			<version>1.1.2</version>
 			<scope>provided</scope>
 		</dependency>
+		<!-- in WEB-INF/lib -->
 		<dependency>
 			<groupId>taglibs</groupId>
 			<artifactId>standard</artifactId>
 			<version>1.1.2</version>
-			<scope>provided</scope>
+			<scope>compile</scope>
 		</dependency>
 	</dependencies>
 	<build>
