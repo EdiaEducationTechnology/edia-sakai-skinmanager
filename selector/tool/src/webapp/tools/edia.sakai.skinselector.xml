@@ -17,6 +17,7 @@
 		<!-- Configure title bar for portal -->
 		<configuration name="reset.button" value="true" />
 		<configuration name="help.button" value="true" />
+		<configuration name="functions.require" value="site.upd" />
 		<!-- 
 		<configuration name="help.id" value="edia.sakai.selector" type="final" />
 		 -->
