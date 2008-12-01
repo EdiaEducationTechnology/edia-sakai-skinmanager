@@ -27,14 +27,6 @@
     <dependency>
       <groupId>nl.edia</groupId>
       <artifactId>edia-sakai-skinmanager-api-impl</artifactId>
-      <version>${sakai.version}</version>
-      <!--properties:  war.bundle: true -->
-    </dependency>
-    <dependency>
-      <groupId>nl.edia</groupId>
-      <artifactId>edia-sakai-utils</artifactId>
-      <version>${sakai.version}</version>
-      <!--properties:  war.bundle: true -->
     </dependency>
   </dependencies>
   <build>

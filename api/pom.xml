@@ -25,19 +25,6 @@
     <dependency>
       <groupId>org.sakaiproject</groupId>
       <artifactId>sakai-site-api</artifactId>
-      <version>${sakai.version}</version>
-      <scope>provided</scope>
     </dependency>
   </dependencies>
-  <build>
-    <resources>
-      <resource>
-        <directory>src/java</directory>
-        <includes>
-          <include>**/*.xml</include>
-        </includes>
-      </resource>
-    </resources>
-    <sourceDirectory>src/java</sourceDirectory>
-  </build>
 </project>
