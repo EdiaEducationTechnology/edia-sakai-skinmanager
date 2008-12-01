@@ -4,7 +4,7 @@
   <parent>
     <artifactId>edia-sakai-skin-manager</artifactId>
     <groupId>org.sakaiproject</groupId>
-    <version>2.5.3</version>
+    <version>M2</version>
     <relativePath>../../pom.xml</relativePath>
   </parent>
   <name>Edia Skin Selector Tool</name>
@@ -22,89 +22,64 @@
     <dependency>
       <groupId>nl.edia</groupId>
       <artifactId>edia-sakai-utils</artifactId>
-      <version>${sakai.version}</version>
-      <!--properties:  war.bundle: true -->
     </dependency>
     <!-- we are running a webapp in tomcat so we need the servlet api -->
-    <dependency>
-      <groupId>servletapi</groupId>
-      <artifactId>servletapi</artifactId>
-      <version>2.4</version>
-      <scope>provided</scope>
-    </dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+		</dependency>
     <!-- Spring dependencies. -->
     <dependency>
-      <groupId>${sakai.spring.groupId}</groupId>
-      <artifactId>${sakai.spring.artifactId}</artifactId>
-      <version>${sakai.spring.version}</version>
-      <scope>provided</scope>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring</artifactId>
     </dependency>
     <!-- our tool internal dependencies -->
     <dependency>
       <groupId>nl.edia</groupId>
       <artifactId>edia-sakai-skinmanager-api</artifactId>
-      <version>${sakai.version}</version>
-      <scope>provided</scope>
     </dependency>
     <!-- this is needed to use the ServerConfigurationService -->
     <dependency>
       <groupId>org.sakaiproject</groupId>
       <artifactId>sakai-component-api</artifactId>
-      <version>${sakai.version}</version>
-      <scope>provided</scope>
     </dependency>
     <!-- Various Sakai dependencies -->
     <dependency>
       <groupId>org.sakaiproject</groupId>
       <artifactId>sakai-authz-api</artifactId>
-      <version>${sakai.version}</version>
-      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.sakaiproject</groupId>
       <artifactId>sakai-site-api</artifactId>
-      <version>${sakai.version}</version>
-      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.sakaiproject</groupId>
       <artifactId>sakai-entity-api</artifactId>
-      <version>${sakai.version}</version>
-      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.sakaiproject</groupId>
       <artifactId>sakai-util-api</artifactId>
-      <version>${sakai.version}</version>
-      <scope>provided</scope>
     </dependency>
     <!-- Commons JARS put in shared/lib by Sakai -->
     <dependency>
       <groupId>commons-lang</groupId>
       <artifactId>commons-lang</artifactId>
-      <version>${sakai.commons.lang.version}</version>
-      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>commons-logging</groupId>
       <artifactId>commons-logging</artifactId>
-      <version>1.0.4</version>
-      <scope>provided</scope>
     </dependency>
 		<!-- in shared/lib -->
 		<dependency>
-			<groupId>jstl</groupId>
+			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
-			<version>1.1.2</version>
-			<scope>provided</scope>
 		</dependency>
 		<!-- in WEB-INF/lib -->
 		<dependency>
 			<groupId>taglibs</groupId>
 			<artifactId>standard</artifactId>
-			<version>1.1.2</version>
-			<scope>compile</scope>
-		</dependency>		
+			<scope>provided</scope>
+		</dependency>
   </dependencies>
   <build>
     <resources>
@@ -112,12 +87,6 @@
         <directory>${basedir}/src/bundle</directory>
         <includes>
           <include>**/*.properties</include>
-        </includes>
-      </resource>
-      <resource>
-        <directory>${basedir}/src/java</directory>
-        <includes>
-          <include>**/*.hbm.xml</include>
         </includes>
       </resource>
       <resource>
