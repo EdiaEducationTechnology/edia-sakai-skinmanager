@@ -39,7 +39,7 @@
 			<dependency>
 				<groupId>nl.edia</groupId>
 				<artifactId>edia-sakai-utils</artifactId>
-				<version>1.1.0</version>
+				<version>M2</version>
 			</dependency>
 			<dependency>
 				<groupId>org.sakaiproject</groupId>
