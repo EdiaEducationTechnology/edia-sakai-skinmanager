@@ -119,7 +119,7 @@ public class SkinSelectorController extends SimpleFormController {
 	 * @author roland
 	 *
 	 */
-	public class SkinSelectValueObject {
+	private static class SkinSelectValueObject {
 		/**
 		 * The current selected skin 
 		 */

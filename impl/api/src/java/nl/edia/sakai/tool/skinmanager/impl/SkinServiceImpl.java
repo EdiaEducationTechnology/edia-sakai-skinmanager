@@ -28,15 +28,14 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import nl.edia.sakai.tool.skinmanager.ActionNotAlowedException;
 import nl.edia.sakai.tool.skinmanager.Permissions;
-import nl.edia.sakai.tool.skinmanager.SkinInUseException;
 import nl.edia.sakai.tool.skinmanager.SkinArchiveService;
 import nl.edia.sakai.tool.skinmanager.SkinException;
 import nl.edia.sakai.tool.skinmanager.SkinFileSystemService;
+import nl.edia.sakai.tool.skinmanager.SkinInUseException;
 import nl.edia.sakai.tool.skinmanager.SkinPrerequisitesNonFatalException;
 import nl.edia.sakai.tool.skinmanager.SkinService;
 import nl.edia.sakai.tool.skinmanager.model.SkinArchive;
@@ -49,7 +48,6 @@ import org.sakaiproject.authz.cover.FunctionManager;
 import org.sakaiproject.component.cover.ServerConfigurationService;
 import org.sakaiproject.exception.PermissionException;
 import org.sakaiproject.site.api.Site;
-import org.sakaiproject.site.cover.SiteService;
 
 public class SkinServiceImpl implements SkinService {
 
@@ -111,19 +109,8 @@ public class SkinServiceImpl implements SkinService {
 	/* (non-Javadoc)
 	 * @see nl.edia.sakai.tool.skinmanager.SkinService#findSites(java.lang.String)
 	 */
-	public List<Site> findSites(String name) {
-		List mySites = SiteService.getSites(org.sakaiproject.site.api.SiteService.SelectionType.ANY, null, null,
-				null, org.sakaiproject.site.api.SiteService.SortType.TITLE_ASC, null);
-
-		List<Site> myUsingSites = new ArrayList<Site>();
-		Iterator myIterator = mySites.iterator();
-		while (myIterator.hasNext()) {
-			Site mySite = (Site) myIterator.next();
-			if (equalsName(name, mySite)) {
-				myUsingSites.add(mySite);
-			}
-		}
-		return myUsingSites;
+    public List<Site> findSites(String name) {
+		return skinArchiveService.findSites(name, getDefaultSkinName().equals(name));
 	}
 
 	/* (non-Javadoc)
@@ -263,17 +250,7 @@ public class SkinServiceImpl implements SkinService {
 	 */
 	public boolean isInUse(String name) throws ActionNotAlowedException {
 		checkAction(Permissions.PERMISSION_EDIA_SAKAI_SKININSTALL_VIEW);
-		List mySites = SiteService.getSites(org.sakaiproject.site.api.SiteService.SelectionType.ACCESS, null, null,
-				null, org.sakaiproject.site.api.SiteService.SortType.TITLE_ASC, null);
-
-		Iterator myIterator = mySites.iterator();
-		while (myIterator.hasNext()) {
-			Site mySite = (Site) myIterator.next();
-			if (equalsName(name, mySite)) {
-				return true;
-			}
-		}
-		return false;
+		return !findSites(name).isEmpty();
 	}
 
 	/* (non-Javadoc)
@@ -339,15 +316,20 @@ public class SkinServiceImpl implements SkinService {
 	protected boolean equalsName(String name, Site mySite) {
 		String mySkin = mySite.getSkin();
 		
-		String myDefaultSkinName = ServerConfigurationService.getString("skin.default");
-		if (myDefaultSkinName == null) {
-			myDefaultSkinName = "default";
-		}
+		String myDefaultSkinName = getDefaultSkinName();
 		if (myDefaultSkinName.equals(name)) {
 			return mySkin == null || myDefaultSkinName.equals(mySkin) || "".equals(mySkin);
 		}
 		return name.equals(mySkin);
 	}
+
+	protected String getDefaultSkinName() {
+	    String myDefaultSkinName = ServerConfigurationService.getString("skin.default");
+		if (myDefaultSkinName == null) {
+			myDefaultSkinName = "default";
+		}
+	    return myDefaultSkinName;
+    }
 
 	protected byte[] readStream(InputStream data) throws IOException {
 		ByteArrayOutputStream myOutputStream = new ByteArrayOutputStream();
@@ -367,7 +349,7 @@ public class SkinServiceImpl implements SkinService {
 				.getLastModified(), "");
 	}
 
-	private void updateSkin(String name, byte[] myFileData, String comment) throws ActionNotAlowedException, SkinException,
+	private void updateSkin(String name, byte[] myFileData, @SuppressWarnings("unused") String comment) throws ActionNotAlowedException, SkinException,
 			IOException {
 		checkAction(Permissions.PERMISSION_EDIA_SAKAI_SKININSTALL_EDIT);
 		skinFileSystemService.updateSkin(name, new ByteArrayInputStream(myFileData));

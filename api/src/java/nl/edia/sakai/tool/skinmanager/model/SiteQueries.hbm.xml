@@ -5,8 +5,11 @@
 
 <hibernate-mapping>
 	<sql-query name="findSitesWithSkin">
-		<return-scalar column="site" type="string"/>
-		SELECT title FROM sakai_site WHERE skin = :skin  ORDER BY title
+		<return-scalar column="TITLE" type="string"/>
+		SELECT TITLE FROM SAKAI_SITE WHERE SKIN = :skin ORDER BY TITLE
 	</sql-query>
-
+	<sql-query name="findSitesWithDefaultSkin">
+		<return-scalar column="TITLE" type="string"/>
+		SELECT TITLE FROM SAKAI_SITE WHERE SKIN = :skin OR SKIN IS NULL ORDER BY TITLE
+	</sql-query>
 </hibernate-mapping>
