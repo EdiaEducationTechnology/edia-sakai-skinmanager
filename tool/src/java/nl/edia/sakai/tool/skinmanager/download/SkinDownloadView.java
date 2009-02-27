@@ -19,7 +19,8 @@ public class SkinDownloadView implements View {
 		this.skinArchiveService = skinArchiveService;
 	}
 
-	public void render(Map model, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	@SuppressWarnings("unchecked")
+    public void render(Map model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String myName = (String) model.get("id");
 		Number myVersion = (Number) model.get("version");
 

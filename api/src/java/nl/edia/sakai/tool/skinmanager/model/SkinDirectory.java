@@ -81,7 +81,7 @@ public class SkinDirectory implements Serializable {
 	 * @return
 	 */
 	public Date getLastModified() {
-		return lastModified;
+		return protectDate(lastModified);
 	}
 	
 	/**
@@ -89,7 +89,7 @@ public class SkinDirectory implements Serializable {
 	 * @param lastModified
 	 */
 	public void setLastModified(Date lastModified) {
-		this.lastModified = lastModified;
+		this.lastModified = protectDate(lastModified);
 	}
 	
 	/**
@@ -118,6 +118,13 @@ public class SkinDirectory implements Serializable {
 			mySize += skinFile.getSize();
 		}
 		return mySize;
+	}
+	
+	private Date protectDate(Date date) {
+		if (date != null) {
+			return new Date(date.getTime());
+		}
+		return null;
 	}
 
 }
