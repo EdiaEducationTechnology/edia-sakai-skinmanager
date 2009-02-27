@@ -112,7 +112,7 @@ public class SkinServiceImpl implements SkinService {
 	 * @see nl.edia.sakai.tool.skinmanager.SkinService#findSites(java.lang.String)
 	 */
 	public List<Site> findSites(String name) {
-		List mySites = SiteService.getSites(org.sakaiproject.site.api.SiteService.SelectionType.ACCESS, null, null,
+		List mySites = SiteService.getSites(org.sakaiproject.site.api.SiteService.SelectionType.ANY, null, null,
 				null, org.sakaiproject.site.api.SiteService.SortType.TITLE_ASC, null);
 
 		List<Site> myUsingSites = new ArrayList<Site>();
