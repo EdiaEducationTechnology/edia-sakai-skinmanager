@@ -17,6 +17,8 @@
 		<!-- Configure title bar for portal -->
 		<configuration name="reset.button" value="true" />
 		<configuration name="help.button" value="true" />
+		<!-- SM-10, Add functions.require to the configuration options of the Skin Selector. -->
+		<configuration name="functions.require" value="" /> 		
 		<!-- 
 		<configuration name="help.id" value="edia.sakai.skinmanager" type="final" />
 		 -->
