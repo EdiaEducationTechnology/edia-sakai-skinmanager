@@ -28,6 +28,8 @@ import java.io.OutputStream;
 import java.util.Date;
 import java.util.List;
 
+import org.sakaiproject.site.api.Site;
+
 import nl.edia.sakai.tool.skinmanager.model.SkinArchive;
 /**
  * Skin archive service, the storage of binary skin data archives (zipped)
@@ -117,4 +119,13 @@ public interface SkinArchiveService {
 	 * @param name
 	 */
 	public void removeSkinArchive(String name);
+	
+	/**
+	 * Finds the sites that make use of the given skin
+	 * @param isDefault if the skin is the default skin. If so, this will also return all sites with null skins.
+	 * 
+	 * @param name, name of the skin, not allowed to be null
+	 * @return a set of sites that use the skin. Never to be null.
+	 */
+	public List<Site> findSites(String name, boolean isDefault);
 }

@@ -48,7 +48,7 @@
 				<th>Titel</th>
 				<c:forEach var="site" items="${sites}">
 					<tr>
-						<td>${site.title}</td>
+						<td>${site}</td>
 					</tr>
 				</c:forEach>
 			</table>
