@@ -4,7 +4,7 @@
   <parent>
     <artifactId>edia-sakai-skin-manager</artifactId>
     <groupId>org.sakaiproject</groupId>
-    <version>2.5.3</version>
+    <version>M2</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
   <name>Edia Skin Manager Model API</name>
