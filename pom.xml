@@ -6,7 +6,7 @@
 	<parent>
 		<artifactId>master</artifactId>
 		<groupId>org.sakaiproject</groupId>
-		<version>M2</version>
+		<version>2.5.3</version>
 		<relativePath>../master/pom.xml</relativePath>
 	</parent>
 	<name>Sakai</name>
@@ -28,33 +28,33 @@
 			<dependency>
 				<groupId>nl.edia</groupId>
 				<artifactId>edia-sakai-skinmanager-api</artifactId>
-				<version>M2</version>
+				<version>2.5.3</version>
 				<scope>provided</scope>
 			</dependency>
 			<dependency>
 				<groupId>nl.edia</groupId>
 				<artifactId>edia-sakai-skinmanager-api-impl</artifactId>
-				<version>M2</version>
+				<version>2.5.3</version>
 			</dependency>
 			<dependency>
 				<groupId>nl.edia</groupId>
 				<artifactId>edia-sakai-utils</artifactId>
-				<version>M2</version>
+				<version>1.1.0</version>
 			</dependency>
 			<dependency>
 				<groupId>org.sakaiproject</groupId>
 				<artifactId>sakai-util</artifactId>
-				<version>M2</version>
+				<version>2.5.3</version>
 			</dependency>
 			<dependency>
 				<groupId>org.sakaiproject</groupId>
 				<artifactId>sakai-user-util</artifactId>
-				<version>M2</version>
+				<version>2.5.3</version>
 			</dependency>
 			<dependency>
 				<groupId>org.sakaiproject</groupId>
 				<artifactId>sakai-site-impl</artifactId>
-				<version>M2</version>
+				<version>2.5.3</version>
 			</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>

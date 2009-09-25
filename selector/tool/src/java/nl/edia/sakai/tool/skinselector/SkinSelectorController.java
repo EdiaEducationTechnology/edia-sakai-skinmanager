@@ -119,16 +119,16 @@ public class SkinSelectorController extends SimpleFormController {
 	 * @author roland
 	 *
 	 */
-	private static class SkinSelectValueObject {
+	public static class SkinSelectValueObject {
 		/**
 		 * The current selected skin 
 		 */
-		String skin;
+		private String skin;
 
 		/**
 		 * Thrue if the skin has been updated.
 		 */
-		Boolean updated = Boolean.FALSE;
+		private boolean updated = false;
 
 		public String getSkin() {
 			return skin;
@@ -138,11 +138,11 @@ public class SkinSelectorController extends SimpleFormController {
 			this.skin = skin;
 		}
 
-		public Boolean getUpdated() {
+		public boolean isUpdated() {
 			return updated;
 		}
 
-		public void setUpdated(Boolean updated) {
+		public void setUpdated(boolean updated) {
 			this.updated = updated;
 		}
 	}
