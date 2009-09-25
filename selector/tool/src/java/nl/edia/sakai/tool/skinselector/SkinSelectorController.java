@@ -119,7 +119,7 @@ public class SkinSelectorController extends SimpleFormController {
 	 * @author roland
 	 *
 	 */
-	private static class SkinSelectValueObject {
+	public static class SkinSelectValueObject {
 		/**
 		 * The current selected skin 
 		 */
@@ -138,7 +138,7 @@ public class SkinSelectorController extends SimpleFormController {
 			this.skin = skin;
 		}
 
-		public Boolean getUpdated() {
+		public Boolean isUpdated() {
 			return updated;
 		}
 
