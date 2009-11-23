@@ -5,6 +5,7 @@
 		<property name="mappingResources">
 			<list>
 				<value>nl/edia/sakai/tool/skinmanager/model/SkinArchive.hbm.xml</value>
+				<value>nl/edia/sakai/tool/skinmanager/model/SiteQueries.hbm.xml</value>
 			</list>
 		</property>
 	</bean>
