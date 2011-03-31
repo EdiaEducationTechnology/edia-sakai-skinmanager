@@ -1,30 +1,23 @@
 <?xml version="1.0"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://maven.apache.org/POM/4.0.0"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+		xmlns="http://maven.apache.org/POM/4.0.0"
+		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<artifactId>edia-sakai-skin-manager</artifactId>
-		<groupId>org.sakaiproject</groupId>
-		<version>M2</version>
-		<relativePath>../pom.xml</relativePath>
-	</parent>
+	
 	<name>Edia Skin Manager Tool</name>
 	<groupId>nl.edia</groupId>
 	<artifactId>edia-sakai-skinmanager-tool</artifactId>
-	<organization>
-		<name>Sakai Foundation</name>
-		<url>http://sakaiproject.org/</url>
-	</organization>
-	<inceptionYear>2006</inceptionYear>
+
+	<parent>
+		<groupId>nl.edia</groupId>
+		<artifactId>edia-sakai-skinmanager</artifactId>
+		<version>4.0.0</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+
 	<packaging>war</packaging>
+
 	<dependencies>
-		<!-- The sakaiproject plugin let's us build our tool without building
-			the entire sakai code base -->
-		<dependency>
-			<groupId>nl.edia</groupId>
-			<artifactId>edia-sakai-utils</artifactId>
-		</dependency>
 		<!-- we are running a webapp in tomcat so we need the servlet api -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -37,6 +30,10 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
 			<artifactId>spring-webflow</artifactId>
 		</dependency>
 		<!-- our tool internal dependencies -->
@@ -44,43 +41,18 @@
 			<groupId>nl.edia</groupId>
 			<artifactId>edia-sakai-skinmanager-api</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>nl.edia</groupId>
+			<artifactId>edia-sakai-utils</artifactId>
+		</dependency>
 		<!-- Various Sakai dependencies -->
 		<dependency>
-			<groupId>org.sakaiproject</groupId>
-			<artifactId>sakai-authz-api</artifactId>
-		</dependency>
-		<!-- this is needed to use the ServerConfigurationService -->
-		<dependency>
-			<groupId>org.sakaiproject</groupId>
-			<artifactId>sakai-component-api</artifactId>
+			<groupId>org.sakaiproject.kernel</groupId>
+			<artifactId>sakai-kernel-api</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.sakaiproject</groupId>
-			<artifactId>sakai-entity-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.sakaiproject</groupId>
-			<artifactId>sakai-site-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.sakaiproject</groupId>
-			<artifactId>sakai-site-impl</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.sakaiproject</groupId>
-			<artifactId>sakai-tool-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.sakaiproject</groupId>
-			<artifactId>sakai-user-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.sakaiproject</groupId>
-			<artifactId>sakai-util</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.sakaiproject</groupId>
-			<artifactId>sakai-util-api</artifactId>
+			<groupId>org.sakaiproject.kernel</groupId>
+			<artifactId>sakai-kernel-util</artifactId>
 		</dependency>
 		<!-- Commons JARS put in shared/lib by Sakai -->
 		<dependency>

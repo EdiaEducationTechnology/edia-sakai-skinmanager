@@ -1,18 +1,29 @@
 <?xml version="1.0"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://maven.apache.org/POM/4.0.0"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+		xmlns="http://maven.apache.org/POM/4.0.0"
+		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	
+	<name>Edia Sakai Skin Manager</name>
+	<groupId>nl.edia</groupId>
+	<artifactId>edia-sakai-skinmanager</artifactId>
+	<version>4.0.0</version>
+
+	<organization>
+		<name>Edia</name>
+		<url>http://www.edia.nl/</url>
+	</organization>
+	
+	<inceptionYear>2007</inceptionYear>
+
 	<parent>
 		<artifactId>master</artifactId>
 		<groupId>org.sakaiproject</groupId>
-		<version>M2</version>
-		<relativePath>../master/pom.xml</relativePath>
+		<version>2.7.0</version>
 	</parent>
-	<name>Sakai</name>
-	<groupId>org.sakaiproject</groupId>
-	<artifactId>edia-sakai-skin-manager</artifactId>
+	
 	<packaging>pom</packaging>
+
 	<modules>
 		<module>selector/tool</module>
 		<module>impl/api</module>
@@ -20,7 +31,10 @@
 		<module>help</module>
 		<module>api</module>
 		<module>tool</module>
+		<!-- Use this only if you are building agains Sakai 2.5. -->
+		<!--
 		<module>shared-deploy</module>
+		-->
 	</modules>
 	
 	<dependencyManagement>
@@ -28,58 +42,43 @@
 			<dependency>
 				<groupId>nl.edia</groupId>
 				<artifactId>edia-sakai-skinmanager-api</artifactId>
-				<version>M2</version>
-				<scope>provided</scope>
+				<version>4.0.0</version>
 			</dependency>
 			<dependency>
 				<groupId>nl.edia</groupId>
-				<artifactId>edia-sakai-skinmanager-api-impl</artifactId>
-				<version>M2</version>
+				<artifactId>edia-sakai-skinmanager-impl</artifactId>
+				<version>4.0.0</version>
 			</dependency>
 			<dependency>
 				<groupId>nl.edia</groupId>
 				<artifactId>edia-sakai-utils</artifactId>
-				<version>M2</version>
+				<version>1.2.0</version>
 			</dependency>
+			
 			<dependency>
-				<groupId>org.sakaiproject</groupId>
-				<artifactId>sakai-util</artifactId>
-				<version>M2</version>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-webflow</artifactId>
+				<version>1.0.5</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.springframework</groupId>
+						<artifactId>spring-web</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.springframework</groupId>
+						<artifactId>spring-core</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.springframework</groupId>
+						<artifactId>spring-context</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.springframework</groupId>
+						<artifactId>spring-beans</artifactId>
+					</exclusion>
+				</exclusions>
+				<!--properties:  war.bundle: true -->
 			</dependency>
-			<dependency>
-				<groupId>org.sakaiproject</groupId>
-				<artifactId>sakai-user-util</artifactId>
-				<version>M2</version>
-			</dependency>
-			<dependency>
-				<groupId>org.sakaiproject</groupId>
-				<artifactId>sakai-site-impl</artifactId>
-				<version>M2</version>
-			</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webflow</artifactId>
-			<version>1.0.5</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-web</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-core</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-context</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-beans</artifactId>
-				</exclusion>
-			</exclusions>
-			<!--properties:  war.bundle: true -->
-		</dependency>
 			<dependency>
 				<groupId>taglibs</groupId>
 				<artifactId>standard</artifactId>
@@ -87,15 +86,15 @@
 			</dependency>			
 		</dependencies>
 	</dependencyManagement>	
-  <build>
-    <resources>
-      <resource>
-        <directory>src/java</directory>
-        <includes>
-          <include>**/*.xml</include>
-        </includes>
-      </resource>
-    </resources>
-    <sourceDirectory>src/java</sourceDirectory>
-  </build>
+	<build>
+		<resources>
+			<resource>
+				<directory>src/java</directory>
+				<includes>
+					<include>**/*.xml</include>
+				</includes>
+			</resource>
+		</resources>
+		<sourceDirectory>src/java</sourceDirectory>
+	</build>
 </project>
