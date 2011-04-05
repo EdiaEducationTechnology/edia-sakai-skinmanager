@@ -38,10 +38,12 @@ import nl.edia.sakai.tool.skinmanager.model.SkinArchive;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.sakaiproject.site.api.Site;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
@@ -192,12 +194,29 @@ public class SkinArchiveServiceImpl extends HibernateDaoSupport implements SkinA
 	private SkinArchive findSkinArchive(final String name, int version, Session session) {
 		return (SkinArchive) session.createCriteria(SkinArchive.class)
 			.add(Restrictions.eq("name", name))
-			.add(Restrictions.eq("version", new Integer(version))).uniqueResult();
+			.add(Restrictions.eq("version", Integer.valueOf(version))).uniqueResult();
 	}
 
 	private SkinArchive findSkinArchive(final String name, Session session) {
 		return (SkinArchive) session.createCriteria(SkinArchive.class).add(Restrictions.eq("name", name)).addOrder(
 				Order.desc("version")).setMaxResults(1).uniqueResult();
+	}
+
+	@SuppressWarnings("unchecked")
+    public List<Site> findSites(final String skin, final boolean isDefault) {
+		return (List<Site>) getHibernateTemplate().execute(new HibernateCallback() {
+			public Object doInHibernate(Session session) throws HibernateException, SQLException {
+				Query query;
+				if (isDefault) {
+					query = session.getNamedQuery("findSitesWithDefaultSkin");
+				} else {
+					query = session.getNamedQuery("findSitesWithSkin");
+
+				}
+				query.setString("skin", skin);
+				return query.list();
+			}
+		});
 	}
 
 }

@@ -6,7 +6,9 @@
 <hibernate-mapping>
 	<class name="nl.edia.sakai.tool.skinmanager.model.SkinArchive" table="edia_skinmanager_archive">
 		<id name="id" type="long">
-			<generator class="native"/>
+			<generator class="native">
+				<param name="sequence">EDIA_SKINMANAGER_ARCHIVE_S</param>
+			</generator>
 		</id>
 		<property name="name" column="skin_name" type="string" length="64"/>
 		<property name="lastModified" column="skin_lastModified"/>

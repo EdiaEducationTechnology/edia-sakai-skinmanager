@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--
+	Use this only if you are building agains Sakai 2.5.
+-->
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		xmlns="http://maven.apache.org/POM/4.0.0" 
+		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<name>Edia Skin Manager Shared Deployment</name>
+	<groupId>nl.edia</groupId>
+	<artifactId>edia-sakai-skinmanager-shared-deploy</artifactId>
+	
+	<parent>
+		<groupId>nl.edia</groupId>
+		<artifactId>edia-sakai-skinmanager</artifactId>
+		<version>4.0.0</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+
+	<packaging>pom</packaging>
+	<properties>
+		<deploy.target>shared</deploy.target>
+	</properties>
+
+	<dependencies>
+		<!-- Only JSTL is needed in shared/lib -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>taglibs</groupId>
+			<artifactId>standard</artifactId>
+		</dependency>
+	</dependencies>
+</project>

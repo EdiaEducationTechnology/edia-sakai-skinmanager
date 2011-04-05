@@ -74,7 +74,7 @@ public class SkinFileSystemServiceImpl implements SkinFileSystemService {
 	Pattern[] directoryPattern = new Pattern[] { PATTERN_IMAGES_DIR_EMPTY,
 			PATTERN_IMAGES_DIR_CONTENT };
 
-	static final Log log = LogFactory.getLog(SkinFileSystemServiceImpl.class);
+	private static final Log LOG = LogFactory.getLog(SkinFileSystemServiceImpl.class);
 
 	public void createSkin(String name, InputStream data) throws SkinException,
 			IOException {
@@ -88,7 +88,9 @@ public class SkinFileSystemServiceImpl implements SkinFileSystemService {
 			installSkin(mySkinDir, file);
 			isSucceeded = true;
 		} finally {
-			file.delete();
+			if (!file.delete()) {
+				LOG.warn("Unable to delete tmp file: " + file);
+			}
 			if (!isSucceeded && mySkinDir != null && mySkinDir.isDirectory()) {
 				FileSystemUtils.purge(mySkinDir);
 			}
@@ -112,7 +114,7 @@ public class SkinFileSystemServiceImpl implements SkinFileSystemService {
 			if (looksLikeSkinDir(myFile)) {
 				myFoundSkins.add(createSkinValueObject(myFile));
 			} else {
-				log.debug("Skipping directory '" + myFile + "', it does not seem a valid skin directory");
+				LOG.debug("Skipping directory '" + myFile + "', it does not seem a valid skin directory");
 			}
 
 		}
@@ -163,7 +165,9 @@ public class SkinFileSystemServiceImpl implements SkinFileSystemService {
 			File mySkinDir = prepareSkinDir(name, true);
 			installSkin(mySkinDir, file);
 		} finally {
-			file.delete();
+			if (!file.delete()) {
+				LOG.warn("Unable to delete tmp file: " + file);
+			}
 		}
 	}
 
@@ -172,14 +176,16 @@ public class SkinFileSystemServiceImpl implements SkinFileSystemService {
 		String myEntryName = zipEntry.getName();
 		boolean isMatched = isValidName(myEntryName);
 		if (!isMatched) {
-			log.warn("Skipping file entry: " + myEntryName + "");
+			LOG.warn("Skipping file entry: " + myEntryName + "");
 			return;
 		}
 
 		if (PATTERN_IMAGES_DIR_CONTENT.matcher(myEntryName).matches()) {
 			File myParentDir = file.getParentFile();
 			if (!myParentDir.exists()) {
-				myParentDir.mkdir();
+				if (!myParentDir.mkdir()) {
+					LOG.warn("Unable to mkdir: " + myParentDir);
+				}
 			}
 		}
 		InputStream myInputStream = null;
@@ -253,12 +259,15 @@ public class SkinFileSystemServiceImpl implements SkinFileSystemService {
 	protected File createTempZip(InputStream data) throws IOException {
 		File myTempFile = File.createTempFile("skinmanager", "zip");
 		OutputStream myOutputStream = new FileOutputStream(myTempFile);
-		byte[] buffer = new byte[1024];
-		int read;
-		while ((read = data.read(buffer)) != -1) {
-			myOutputStream.write(buffer, 0, read);
+		try {
+			byte[] buffer = new byte[1024];
+			int read;
+			while ((read = data.read(buffer)) != -1) {
+				myOutputStream.write(buffer, 0, read);
+			}
+		} finally {
+			myOutputStream.close();
 		}
-		myOutputStream.close();
 		return myTempFile;
 	}
 
@@ -381,7 +390,7 @@ public class SkinFileSystemServiceImpl implements SkinFileSystemService {
 		String myEntryName = myZipEntry.getName();
 		boolean isMatched = isValidName(myEntryName);
 		if (!isMatched) {
-			log.warn("Skipping file entry: " + myEntryName + "");
+			LOG.warn("Skipping file entry: " + myEntryName + "");
 			return;
 		}
 		File myFile = new File(skinDir, myEntryName);
@@ -404,8 +413,14 @@ public class SkinFileSystemServiceImpl implements SkinFileSystemService {
 		} else {
 			if (myZipEntry.isDirectory()) {
 				if (!myFile.isDirectory()) {
-					myFile.delete();
-					myFile.mkdirs();
+					if (!myFile.delete()) {
+						throw new SkinException("Error unpacking zip file, cannot remove file '" 
+								+ myFile.getCanonicalPath() + "'");
+					}
+					if (!myFile.mkdirs()) {
+						throw new SkinException("Error unpacking zip file, cannot create directory '" 
+								+ myFile.getCanonicalPath() + "'");
+					}
 				}
 			} else {
 				if (myFile.isDirectory()) {
@@ -581,6 +596,7 @@ public class SkinFileSystemServiceImpl implements SkinFileSystemService {
 							+ myFile.getName() + "/");
 					mySkinFile.setTime(myFile.lastModified());
 					out.putNextEntry(mySkinFile);
+					out.write(new byte[0]);
 					out.closeEntry();
 					writeSkinZipEntries(prefix + myFile.getName(), myFile, out);
 				}
@@ -597,15 +613,17 @@ public class SkinFileSystemServiceImpl implements SkinFileSystemService {
 
 		byte[] buf = new byte[1024];
 		InputStream in = new FileInputStream(file);
-		// Transfer bytes from the file to the ZIP file
-		int len;
-		while ((len = in.read(buf)) > 0) {
-			out.write(buf, 0, len);
+		try {
+			// Transfer bytes from the file to the ZIP file
+			int len;
+			while ((len = in.read(buf)) > 0) {
+				out.write(buf, 0, len);
+			}
+		} finally {
+			in.close();
 		}
-
 		// Complete the entry
 		out.closeEntry();
-		in.close();
 	}
 	/**
 	 * Checks if a dir is a valid skin directory, this means, a subdir
