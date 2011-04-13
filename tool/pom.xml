@@ -7,11 +7,16 @@
 	<name>Edia Skin Manager Tool</name>
 	<groupId>nl.edia</groupId>
 	<artifactId>edia-sakai-skinmanager-tool</artifactId>
+	<organization>
+		<name>Edia</name>
+		<url>http://www.edia.nl/</url>
+	</organization>
+	<inceptionYear>2007</inceptionYear>
 
 	<parent>
 		<groupId>nl.edia</groupId>
 		<artifactId>edia-sakai-skinmanager</artifactId>
-		<version>4.0.0</version>
+		<version>4.0.1</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 

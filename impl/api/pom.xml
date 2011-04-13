@@ -1,16 +1,22 @@
 <?xml version="1.0"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		xmlns="http://maven.apache.org/POM/4.0.0" 
+		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<name>Edia Skin Manager Logic Impl</name>
 	<groupId>nl.edia</groupId>
 	<artifactId>edia-sakai-skinmanager-impl</artifactId>
+	<organization>
+		<name>Edia</name>
+		<url>http://www.edia.nl/</url>
+	</organization>
+	<inceptionYear>2007</inceptionYear>
 
 	<parent>
 		<groupId>nl.edia</groupId>
 		<artifactId>edia-sakai-skinmanager</artifactId>
-		<version>4.0.0</version>
-		<relativePath>../../pom.xml</relativePath>
+		<version>4.0.1</version>
 	</parent>
 
 	<!-- logic impl should be deployed as a jar and included in the pack, not to shared -->
