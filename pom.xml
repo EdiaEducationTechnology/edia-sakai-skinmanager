@@ -7,7 +7,7 @@
 	<name>Edia Sakai Skin Manager</name>
 	<groupId>nl.edia</groupId>
 	<artifactId>edia-sakai-skinmanager</artifactId>
-	<version>4.0.1</version>
+	<version>4.0.2</version>
 	<organization>
 		<name>Edia</name>
 		<url>http://www.edia.nl/</url>
@@ -40,13 +40,13 @@
 			<dependency>
 				<groupId>nl.edia</groupId>
 				<artifactId>edia-sakai-skinmanager-api</artifactId>
-				<version>4.0.1</version>
+				<version>4.0.2</version>
 				<scope>provided</scope>
 			</dependency>
 			<dependency>
 				<groupId>nl.edia</groupId>
 				<artifactId>edia-sakai-skinmanager-impl</artifactId>
-				<version>4.0.1</version>
+				<version>4.0.2</version>
 			</dependency>
 			<dependency>
 				<groupId>nl.edia</groupId>
