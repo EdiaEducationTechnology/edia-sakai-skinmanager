@@ -14,7 +14,7 @@
 	<parent>
 		<groupId>nl.edia</groupId>
 		<artifactId>edia-sakai-skinmanager</artifactId>
-		<version>4.0.1</version>
+		<version>4.0.2</version>
 	</parent>
 
 	<!-- you must deploy your model to shared or it will be  inaccessible by Hibernate -->
