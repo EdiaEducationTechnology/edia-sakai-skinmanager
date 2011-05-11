@@ -16,7 +16,7 @@
 	<parent>
 		<groupId>nl.edia</groupId>
 		<artifactId>edia-sakai-skinmanager</artifactId>
-		<version>4.0.2</version>
+		<version>4.1.0</version>
 	</parent>
 
 	<!-- logic impl should be deployed as a jar and included in the pack, not to shared -->
