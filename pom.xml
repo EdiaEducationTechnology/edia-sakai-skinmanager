@@ -7,7 +7,7 @@
 	<name>Edia Sakai Skin Manager</name>
 	<groupId>nl.edia</groupId>
 	<artifactId>edia-sakai-skinmanager</artifactId>
-	<version>4.1.0</version>
+	<version>4.1.3-SNAPSHOT</version>
 	<organization>
 		<name>Edia</name>
 		<url>http://www.edia.nl/</url>
@@ -85,6 +85,11 @@
 			</dependency>			
 		</dependencies>
 	</dependencyManagement>	
+	<scm>		
+		<connection>scm:svn:https://source.sakaiproject.org/contrib/edia/skin-manager/trunk</connection>
+		<developerConnection>scm:svn:https://source.sakaiproject.org/contrib/edia/skin-manager/trunk</developerConnection>
+		<url>https://source.sakaiproject.org/contrib/edia/skin-manager/trunk</url>
+	</scm>
 	<build>
 		<resources>
 			<resource>
