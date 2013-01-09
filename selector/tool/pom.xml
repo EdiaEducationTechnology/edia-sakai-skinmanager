@@ -16,6 +16,7 @@
 		<groupId>nl.edia</groupId>
 		<artifactId>edia-sakai-skinmanager</artifactId>
 		<version>4.1.4-SNAPSHOT</version>
+		<relativePath>../../pom.xml</relativePath>
 	</parent>
 
 	<packaging>war</packaging>
