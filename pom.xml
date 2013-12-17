@@ -101,7 +101,9 @@
           <licenseName>ecl_v2</licenseName>
           <licenseResolver>classpath://org/sakaiproject/license</licenseResolver>
           <addJavaLicenseAfterPackage>false</addJavaLicenseAfterPackage>
-          <includes><include>**/*.java</include></includes>
+          <includes>
+            <include>**/*.java</include>
+          </includes>
         </configuration>
         <dependencies>
           <!-- The ECL isn't in the main plugin codebase -->
