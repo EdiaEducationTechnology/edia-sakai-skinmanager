@@ -4,7 +4,7 @@
   <name>Edia Sakai Skin Manager</name>
   <groupId>nl.edia</groupId>
   <artifactId>edia-sakai-skinmanager</artifactId>
-  <version>4.2.1</version>
+  <version>4.2.2-SNAPSHOT</version>
   <organization>
     <name>Edia</name>
     <url>http://www.edia.nl/</url>
@@ -33,13 +33,13 @@
       <dependency>
         <groupId>nl.edia</groupId>
         <artifactId>edia-sakai-skinmanager-api</artifactId>
-        <version>4.2.1</version>
+        <version>4.2.2-SNAPSHOT</version>
         <scope>provided</scope>
       </dependency>
       <dependency>
         <groupId>nl.edia</groupId>
         <artifactId>edia-sakai-skinmanager-impl</artifactId>
-        <version>4.2.1</version>
+        <version>4.2.2-SNAPSHOT</version>
       </dependency>
       <dependency>
         <groupId>nl.edia</groupId>
@@ -78,9 +78,9 @@
     </dependencies>
   </dependencyManagement>
   <scm>
-    <connection>scm:svn:https://source.sakaiproject.org/contrib/edia/skin-manager/tags/edia-sakai-skinmanager-4.2.1</connection>
-    <developerConnection>scm:svn:https://source.sakaiproject.org/contrib/edia/skin-manager/tags/edia-sakai-skinmanager-4.2.1</developerConnection>
-    <url>https://source.sakaiproject.org/contrib/edia/skin-manager/tags/edia-sakai-skinmanager-4.2.1</url>
+    <connection>scm:svn:https://source.sakaiproject.org/contrib/edia/skin-manager/trunk</connection>
+    <developerConnection>scm:svn:https://source.sakaiproject.org/contrib/edia/skin-manager/trunk</developerConnection>
+    <url>https://source.sakaiproject.org/contrib/edia/skin-manager/trunk</url>
   </scm>
   <build>
     <resources>
