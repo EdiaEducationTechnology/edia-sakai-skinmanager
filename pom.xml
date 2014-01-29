@@ -124,6 +124,19 @@
       </plugin>
     </plugins>
   </build>
+  <pluginRepositories>
+    <pluginRepository>
+      <id>public-plugins</id>
+      <name>Edia Public Archiva Repository</name>
+      <url>http://archiva.edia.nl/archiva/repository/public/</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </pluginRepository>
+  </pluginRepositories>
   <repositories>
     <repository>
       <id>public</id>

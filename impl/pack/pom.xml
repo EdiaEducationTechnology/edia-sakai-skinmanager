@@ -31,7 +31,7 @@
     </dependency>
   </dependencies>
   <build>
-    <resources />
+    <resources/>
     <sourceDirectory>src/java</sourceDirectory>
   </build>
 </project>
