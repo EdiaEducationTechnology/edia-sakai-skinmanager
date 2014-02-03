@@ -251,7 +251,7 @@ public class SkinServiceImpl implements SkinService {
 	}
 
 	protected boolean shouldOverwriteDeployedSkin(SkinDirectory skinDirectory, SkinArchive skinArchive) {
-		boolean overwrite = ServerConfigurationService.getBoolean("skinmanager.overwrite.deployed", false);
+		boolean overwrite = ServerConfigurationService.getBoolean("skinmanager.deploy.overwrite", false);
 		return overwrite && !equals(skinArchive.getLastModified(), skinDirectory.getLastModified());
 	}
 
