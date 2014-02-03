@@ -166,8 +166,8 @@ public class SkinServiceImpl implements SkinService {
 		FunctionManager.registerFunction(Permissions.PERMISSION_EDIA_SAKAI_SKININSTALL_EDIT);
 		FunctionManager.registerFunction(Permissions.PERMISSION_EDIA_SAKAI_SKININSTALL_DELETE);
 		
-		final int waitIntervalRetry = ServerConfigurationService.getInt("skinmanager.deploy.interval", INTERVAL_REDEPLOY);
-		final boolean activeSync = ServerConfigurationService.getBoolean("skinmanager.deploy.continious", BOOLEAN_ACTIVE_SYNC);
+		final int waitIntervalRetry = ServerConfigurationService.getInt("skinmanager.sync.interval", INTERVAL_REDEPLOY);
+		final boolean activeSync = ServerConfigurationService.getBoolean("skinmanager.sync.continious", BOOLEAN_ACTIVE_SYNC);
 		
 		Runnable myTask = new Runnable() {
 			@Override
