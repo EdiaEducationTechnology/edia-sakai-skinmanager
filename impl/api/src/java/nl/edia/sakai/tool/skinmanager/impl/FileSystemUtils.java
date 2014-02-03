@@ -27,8 +27,7 @@ public class FileSystemUtils {
 	public static boolean purge(File dir) {
 		File[] myListFiles = dir.listFiles();
 		boolean ok = true;
-		for (int i = 0; i < myListFiles.length; i++) {
-			File myFile = myListFiles[i];
+		for (File myFile : myListFiles) {
 			if (myFile.isDirectory()) {
 				if (!purge(myFile)) {
 					ok = false;
