@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<name>Edia Skin Manager Pack</name>
+	<groupId>nl.edia</groupId>
+	<artifactId>edia-sakai-skinmanager-pack</artifactId>
+  <version>4.2.0</version>
+	<organization>
+		<name>Edia</name>
+		<url>http://www.edia.nl/</url>
+	</organization>
+	<inceptionYear>2007</inceptionYear>
+
+	<parent>
+		<groupId>nl.edia</groupId>
+		<artifactId>edia-sakai-skinmanager</artifactId>
+		<version>4.2.0</version>
+		<relativePath>../../pom.xml</relativePath>
+	</parent>
+
+	<!-- you must deploy your pack to components -->
+	<packaging>sakai-component</packaging>
+	<properties>
+		<deploy.target>components</deploy.target>
+	</properties>
+	
+	<dependencies>
+		<!-- the components pack should include your dao and logic impl 
+			in the war bundle and the components.xml file 
+			(which is basically a spring-config file with a special name -->
+		<dependency>
+			<groupId>nl.edia</groupId>
+			<artifactId>edia-sakai-skinmanager-impl</artifactId>
+		</dependency>
+	</dependencies>
+	<build>
+		<resources />
+		<sourceDirectory>src/java</sourceDirectory>
+	</build>
+</project>
