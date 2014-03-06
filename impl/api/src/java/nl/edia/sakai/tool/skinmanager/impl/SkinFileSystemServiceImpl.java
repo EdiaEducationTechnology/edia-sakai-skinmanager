@@ -71,8 +71,9 @@ public class SkinFileSystemServiceImpl implements SkinFileSystemService {
 			PATTERN_IMAGES_DIR_CONTENT };
 
 	private static final Log LOG = LogFactory.getLog(SkinFileSystemServiceImpl.class);
-
-	public void createSkin(String name, InputStream data) throws SkinException,
+        
+        @Override
+	public void createSkin(String name, InputStream data, Date date, boolean overwrite) throws SkinException,
 			IOException {
 
 		File file = createTempZip(data);
@@ -80,9 +81,10 @@ public class SkinFileSystemServiceImpl implements SkinFileSystemService {
 		boolean isSucceeded = false;
 		try {
 			validateSkinZip(file);
-			mySkinDir = prepareSkinDir(name, false);
+			mySkinDir = prepareSkinDir(name, date, overwrite);
 			installSkin(mySkinDir, file);
 			isSucceeded = true;
+			mySkinDir.setLastModified(date.getTime());
 		} finally {
 			if (!file.delete()) {
 				LOG.warn("Unable to delete tmp file: " + file);
@@ -93,29 +95,29 @@ public class SkinFileSystemServiceImpl implements SkinFileSystemService {
 		}
 	}
 
+        @Override
 	public List<SkinDirectory> fetchInstalledSkins() throws SkinException,
 			IOException {
 		File mySkinHome = getSkinHome();
-		File[] mySkins = mySkinHome.listFiles(new FileFilter() {
-
-			public boolean accept(File pathname) {
-				return pathname.isDirectory();
-			}
-		});
+		File[] mySkins;
+            mySkins = mySkinHome.listFiles(new FileFilter() {
+                @Override
+                public boolean accept(File pathname) {
+                    return pathname.isDirectory();
+                }
+            });
 		List<SkinDirectory> myFoundSkins = new ArrayList<SkinDirectory>(
 				mySkins.length - 1);
-		for (int i = 0; i < mySkins.length; i++) {
-			File myFile = mySkins[i];
-			
-			if (looksLikeSkinDir(myFile)) {
-				myFoundSkins.add(createSkinValueObject(myFile));
-			} else {
-				LOG.debug("Skipping directory '" + myFile + "', it does not seem a valid skin directory");
-			}
-
-		}
+            for (File myFile : mySkins) {
+                if (looksLikeSkinDir(myFile)) {
+                    myFoundSkins.add(createSkinValueObject(myFile));
+                } else {
+                    LOG.debug("Skipping directory '" + myFile + "', it does not seem a valid skin directory");
+                }
+            }
 		Collections.sort(myFoundSkins, new Comparator<SkinDirectory>() {
 
+                        @Override
 			public int compare(SkinDirectory o1, SkinDirectory o2) {
 				return o1.getName().compareToIgnoreCase(o2.getName());
 			}
@@ -130,36 +132,39 @@ public class SkinFileSystemServiceImpl implements SkinFileSystemService {
 		boolean isImagesFound = false;
 		
 		File[] listFiles = myFile.listFiles();
-		for (int i = 0; i < listFiles.length; i++) {
-			File file = listFiles[i];
-			String name = file.getName();
-			if (file.isFile() && name.equals("tool.css")) {
-				isToolFound = true;
-			} else if (file.isFile() && name.equals("portal.css")) {
-				isPortalFound = true;
-			} else if (file.isDirectory() &&  name.equals("images")) {
-				isImagesFound = true;
-			}
-		}
+                for (File file : listFiles) {
+                String name = file.getName();
+                if (file.isFile() && name.equals("tool.css")) {
+                    isToolFound = true;
+                } else if (file.isFile() && name.equals("portal.css")) {
+                    isPortalFound = true;
+                } else if (file.isDirectory() &&  name.equals("images")) {
+                    isImagesFound = true;
+                }
+            }
 		
 		return isToolFound && isPortalFound && isImagesFound;
 	}
 
+        @Override
 	public SkinDirectory findSkin(String id) throws SkinException, IOException {
 		return createSkinValueObject(getSkinDir(id));
 	}
 
+        @Override
 	public void removeSkin(String name) throws SkinException, IOException {
 		removeSkinDir(name);
 	}
 
-	public void updateSkin(String name, InputStream data) throws SkinException,
+        @Override
+	public void updateSkin(String name, Date date, InputStream data) throws SkinException,
 			IOException {
 		File file = createTempZip(data);
 		try {
 			validateSkinZip(file);
-			File mySkinDir = prepareSkinDir(name, true);
+			File mySkinDir = prepareSkinDir(name, date, true);
 			installSkin(mySkinDir, file);
+			mySkinDir.setLastModified(date.getTime());
 		} finally {
 			if (!file.delete()) {
 				LOG.warn("Unable to delete tmp file: " + file);
@@ -206,11 +211,11 @@ public class SkinFileSystemServiceImpl implements SkinFileSystemService {
 
 	protected boolean isValidName(String myEntryName) {
 		boolean isMatched = false;
-		for (int i = 0; i < includePattern.length; i++) {
-			if (includePattern[i].matcher(myEntryName).matches()) {
-				isMatched = true;
-			}
-		}
+            for (Pattern includePattern1 : includePattern) {
+                if (includePattern1.matcher(myEntryName).matches()) {
+                    isMatched = true;
+                }
+            }
 		return isMatched;
 	}
 
@@ -225,8 +230,7 @@ public class SkinFileSystemServiceImpl implements SkinFileSystemService {
 			}
 			List<SkinFile> myFileNames = new ArrayList<SkinFile>();
 			File[] myChildren = dir.listFiles();
-			for (int i = 0; i < myChildren.length; i++) {
-				File myFile = myChildren[i];
+			for (File myFile : myChildren) {
 				if (myFile.isFile()) {
 					SkinFile mySkinFile = new SkinFile();
 					mySkinFile.setName(prefix + myFile.getName());
@@ -359,8 +363,7 @@ public class SkinFileSystemServiceImpl implements SkinFileSystemService {
 		File[] listFiles = mySkinHome.listFiles();
 		boolean isImagesFound = false;
 		boolean isToolBaseCssFound = false;
-		for (int i = 0; i < listFiles.length; i++) {
-			File myFile = listFiles[i];
+		for (File myFile : listFiles) {
 			if (myFile.isDirectory() && myFile.getName().equals("images")) {
 				isImagesFound = true;
 			} else if (myFile.isFile() && myFile.getName().equals("tool_base.css")) {
@@ -462,7 +465,7 @@ public class SkinFileSystemServiceImpl implements SkinFileSystemService {
 		}
 	}
 
-	protected File prepareSkinDir(String name, boolean overWrite)
+	protected File prepareSkinDir(String name, Date date, boolean overWrite)
 			throws SkinException, IOException {
 		File mySkinDir = getSkinDir(name);
 		if (mySkinDir.exists()) {
@@ -490,7 +493,7 @@ public class SkinFileSystemServiceImpl implements SkinFileSystemService {
 						+ mySkinDir + "'");
 			}
 		}
-
+		mySkinDir.setLastModified(date.getTime());
 		return mySkinDir;
 	}
 
@@ -562,6 +565,7 @@ public class SkinFileSystemServiceImpl implements SkinFileSystemService {
 
 	}
 
+        @Override
 	public void writeSkinData(String name, OutputStream out)
 			throws SkinException, IOException {
 		File mySkinDir = getSkinDir(name);
@@ -583,8 +587,7 @@ public class SkinFileSystemServiceImpl implements SkinFileSystemService {
 				prefix = prefix + "/";
 			}
 			File[] myChildren = dir.listFiles();
-			for (int i = 0; i < myChildren.length; i++) {
-				File myFile = myChildren[i];
+			for (File myFile : myChildren) {
 				if (myFile.isFile()) {
 					writeZipEntry(prefix, out, myFile);
 				} else {

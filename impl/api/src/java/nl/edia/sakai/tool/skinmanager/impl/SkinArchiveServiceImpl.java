@@ -45,8 +45,10 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 public class SkinArchiveServiceImpl extends HibernateDaoSupport implements SkinArchiveService {
 
+	@Override
 	public SkinArchive createSkinArchive(final String name, final InputStream file, final Date time, final String comment) {
 		return (SkinArchive) getHibernateTemplate().execute(new HibernateCallback() {
+			@Override
 			public Object doInHibernate(Session session) throws HibernateException, SQLException {
 				int myVersion = 0;
 				Number myHighestVersion = (Number) session.createCriteria(SkinArchive.class).add(
@@ -74,24 +76,28 @@ public class SkinArchiveServiceImpl extends HibernateDaoSupport implements SkinA
 	}
 
 	@SuppressWarnings("unchecked")
+	@Override
 	public List<SkinArchive> fetchActiveSkinArchives() {
 		return (List<SkinArchive>) getHibernateTemplate().execute(new HibernateCallback() {
+			@Override
 			public Object doInHibernate(Session session) throws HibernateException, SQLException {
 				Criteria myCriteria = session
 						.createCriteria(SkinArchive.class)
 						.add(Restrictions.eq("active", Boolean.TRUE))
 						.add(
 								Restrictions
-										.sqlRestriction(" {alias}.skin_version = ("
-												+ " select max(sa.skin_version) from edia_skinmanager_archive sa where sa.skin_name = {alias}.skin_name "
-												+ " ) "));
+								.sqlRestriction(" {alias}.skin_version = ("
+										+ " select max(sa.skin_version) from edia_skinmanager_archive sa where sa.skin_name = {alias}.skin_name "
+										+ " ) "));
 				return myCriteria.list();
 			}
 		});
 	}
 
+	@Override
 	public void fetchSkinArchiveData(final String name, final int version, final OutputStream out) {
 		getHibernateTemplate().execute(new HibernateCallback() {
+			@Override
 			public Object doInHibernate(Session session) throws HibernateException, SQLException {
 				SkinArchive myFindSkinArchive = findSkinArchive(name, version, session);
 
@@ -106,8 +112,10 @@ public class SkinArchiveServiceImpl extends HibernateDaoSupport implements SkinA
 		});
 	}
 
+	@Override
 	public void fetchSkinArchiveData(final String name, final OutputStream out) {
 		getHibernateTemplate().execute(new HibernateCallback() {
+			@Override
 			public Object doInHibernate(Session session) throws HibernateException, SQLException {
 				SkinArchive myFindSkinArchive = findSkinArchive(name, session);
 
@@ -122,25 +130,31 @@ public class SkinArchiveServiceImpl extends HibernateDaoSupport implements SkinA
 		});
 	}
 
+	@Override
 	public SkinArchive findSkinArchive(final String name) {
 		return (SkinArchive) getHibernateTemplate().execute(new HibernateCallback() {
+			@Override
 			public Object doInHibernate(Session session) throws HibernateException, SQLException {
 				return findSkinArchive(name, session);
 			}
 		});
 	}
 
+	@Override
 	public SkinArchive findSkinArchive(final String name, final int version) {
 		return (SkinArchive) getHibernateTemplate().execute(new HibernateCallback() {
+			@Override
 			public Object doInHibernate(Session session) throws HibernateException, SQLException {
 				return findSkinArchive(name, version, session);
 			}
 		});
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<SkinArchive> findSkinHistory(final String name) {
 		return (List<SkinArchive>) getHibernateTemplate().execute(new HibernateCallback() {
+			@Override
 			public Object doInHibernate(Session session) throws HibernateException, SQLException {
 				return findSkinHistory(name, session);
 			}
@@ -148,16 +162,18 @@ public class SkinArchiveServiceImpl extends HibernateDaoSupport implements SkinA
 
 	}
 
+	@Override
 	public void removeSkinArchive(final String name) {
 		setSkinStatus(name, false);
 	}
 
 	public void setSkinStatus(final String name, final boolean enabled) {
 		getHibernateTemplate().execute(new HibernateCallback() {
+			@Override
 			public Object doInHibernate(Session session) throws HibernateException, SQLException {
 				Iterator<SkinArchive> myIterator = findSkinHistory(name, session).iterator();
 				while (myIterator.hasNext()) {
-					SkinArchive mySkinArchive = (SkinArchive) myIterator.next();
+					SkinArchive mySkinArchive = myIterator.next();
 					mySkinArchive.setActive(enabled);
 				}
 				// String myQueryText = "update SkinArchive SET active = :active
@@ -173,7 +189,7 @@ public class SkinArchiveServiceImpl extends HibernateDaoSupport implements SkinA
 
 	@SuppressWarnings("unchecked")
 	protected List<SkinArchive> findSkinHistory(final String name, Session session) {
-		return (List<SkinArchive>)session.createCriteria(SkinArchive.class).add(Restrictions.eq("name", name)).addOrder(
+		return session.createCriteria(SkinArchive.class).add(Restrictions.eq("name", name)).addOrder(
 				Order.desc("version")).list();
 	}
 
@@ -189,8 +205,8 @@ public class SkinArchiveServiceImpl extends HibernateDaoSupport implements SkinA
 
 	private SkinArchive findSkinArchive(final String name, int version, Session session) {
 		return (SkinArchive) session.createCriteria(SkinArchive.class)
-			.add(Restrictions.eq("name", name))
-			.add(Restrictions.eq("version", Integer.valueOf(version))).uniqueResult();
+				.add(Restrictions.eq("name", name))
+				.add(Restrictions.eq("version", Integer.valueOf(version))).uniqueResult();
 	}
 
 	private SkinArchive findSkinArchive(final String name, Session session) {
@@ -198,9 +214,11 @@ public class SkinArchiveServiceImpl extends HibernateDaoSupport implements SkinA
 				Order.desc("version")).setMaxResults(1).uniqueResult();
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
-    public List<Site> findSites(final String skin, final boolean isDefault) {
+	public List<Site> findSites(final String skin, final boolean isDefault) {
 		return (List<Site>) getHibernateTemplate().execute(new HibernateCallback() {
+			@Override
 			public Object doInHibernate(Session session) throws HibernateException, SQLException {
 				Query query;
 				if (isDefault) {
@@ -213,6 +231,15 @@ public class SkinArchiveServiceImpl extends HibernateDaoSupport implements SkinA
 				return query.list();
 			}
 		});
+	}
+
+	@Override
+	public Date fetchSkinArchiveDate(String name) {
+		final SkinArchive archive = findSkinArchive(name);
+		if (archive != null) {
+			return archive.getLastModified();
+		}
+		return new Date();
 	}
 
 }

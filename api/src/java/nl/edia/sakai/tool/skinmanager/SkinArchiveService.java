@@ -95,6 +95,15 @@ public interface SkinArchiveService {
 	 */
 	public void fetchSkinArchiveData(String name, OutputStream out);
 	
+		/**
+	 * <p>
+	 * Gets the date of the skin.
+	 * </p>
+	 * @param name
+	 * @return the date the skin is created.
+	 */
+	public Date fetchSkinArchiveDate(String name);
+	
 	/**
 	 * <p>
 	 * Gets the data of a specific version of the skin and writes it to the output string. 
