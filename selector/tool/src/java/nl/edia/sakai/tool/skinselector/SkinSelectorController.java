@@ -27,11 +27,13 @@ import javax.servlet.http.HttpServletRequest;
 import nl.edia.sakai.tool.skinmanager.SkinService;
 import nl.edia.sakai.tool.util.SakaiUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.sakaiproject.component.cover.ServerConfigurationService;
 import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.exception.PermissionException;
 import org.sakaiproject.site.api.Site;
 import org.sakaiproject.site.api.SiteService;
+import org.sakaiproject.util.SakaiComponentEvent;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
@@ -58,21 +60,22 @@ public class SkinSelectorController extends SimpleFormController {
 		return new ModelAndView(getSuccessView(), myData);
 	}
 
-	protected boolean updateCurrentSite(String mySkin) throws PermissionException {
-		String myCurrentSelectedSkin = getCurrentSelectedSkin();
-		if (myCurrentSelectedSkin != null) {
-			if (mySkin.equals(myCurrentSelectedSkin)) {
+	protected boolean updateCurrentSite(String skin) throws PermissionException {
+	   skin = processNeoSkinName(skin);
+		String currentSelectedSkin = getCurrentSelectedSkin();
+		if (currentSelectedSkin != null) {
+			if (StringUtils.equals(skin, currentSelectedSkin)) {
 				return false;
 			}
 		}
 
-		String mySiteId = SakaiUtils.getCurrentSiteId();
-		Site mySite = null;
-		if (mySiteId != null) {
+		String siteId = SakaiUtils.getCurrentSiteId();
+		Site site = null;
+		if (siteId != null) {
 			try {
-				mySite = org.sakaiproject.site.cover.SiteService.getSite(mySiteId);
-				mySite.setSkin(mySkin);
-				org.sakaiproject.site.cover.SiteService.save(mySite);
+				site = org.sakaiproject.site.cover.SiteService.getSite(siteId);
+				site.setSkin(skin);
+				org.sakaiproject.site.cover.SiteService.save(site);
 			} catch (IdUnusedException e) {
 				// Ignore
 			}
@@ -82,7 +85,15 @@ public class SkinSelectorController extends SimpleFormController {
 
 	}
 
-	@Override
+	private String processNeoSkinName(String skin) {
+      String portalNeoprefix = ServerConfigurationService.getString("portal.neoprefix");
+      if (StringUtils.startsWith(skin, portalNeoprefix)) {
+         return StringUtils.removeStart(skin, portalNeoprefix);
+      }
+      return skin;
+   }
+
+   @Override
 	protected Object formBackingObject(HttpServletRequest request) throws Exception {
 		SkinSelectValueObject mySkinSelectValueObject = new SkinSelectValueObject();
 		// Before bind, set the current skin
