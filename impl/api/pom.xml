@@ -4,7 +4,7 @@
   <name>Edia Skin Manager Logic Impl</name>
   <groupId>nl.edia</groupId>
   <artifactId>edia-sakai-skinmanager-impl</artifactId>
-  <version>4.2.3-SNAPSHOT</version>
+  <version>4.2.3</version>
   <organization>
     <name>Edia</name>
     <url>http://www.edia.nl/</url>
@@ -13,7 +13,7 @@
   <parent>
     <groupId>nl.edia</groupId>
     <artifactId>edia-sakai-skinmanager</artifactId>
-    <version>4.2.3-SNAPSHOT</version>
+    <version>4.2.3</version>
     <relativePath>../../pom.xml</relativePath>
   </parent>
   <!-- logic impl should be deployed as a jar and included in the pack, not to shared -->
