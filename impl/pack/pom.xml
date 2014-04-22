@@ -4,7 +4,7 @@
   <name>Edia Skin Manager Pack</name>
   <groupId>nl.edia</groupId>
   <artifactId>edia-sakai-skinmanager-pack</artifactId>
-  <version>4.2.4-SNAPSHOT</version>
+  <version>4.2.4</version>
   <organization>
     <name>Edia</name>
     <url>http://www.edia.nl/</url>
@@ -13,7 +13,7 @@
   <parent>
     <groupId>nl.edia</groupId>
     <artifactId>edia-sakai-skinmanager</artifactId>
-    <version>4.2.4-SNAPSHOT</version>
+    <version>4.2.4</version>
     <relativePath>../../pom.xml</relativePath>
   </parent>
   <!-- you must deploy your pack to components -->
