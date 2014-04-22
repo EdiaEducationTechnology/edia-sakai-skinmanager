@@ -38,7 +38,10 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
 public class SkinSelectorController extends SimpleFormController {
-	SkinService skinService;
+	protected SkinService skinService;
+	
+	private static final String PORTAL_SKIN_NEOPREFIX_PROPERTY = "portal.neoprefix";
+	private static final String PORTAL_SKIN_NEOPREFIX_DEFAULT = "neo-";
 
 	@Override
 	protected ModelAndView onSubmit(Object command) throws Exception {
@@ -61,7 +64,7 @@ public class SkinSelectorController extends SimpleFormController {
 	}
 
 	protected boolean updateCurrentSite(String skin) throws PermissionException {
-	   skin = processNeoSkinName(skin);
+		skin = processNeoSkinName(skin);
 		String currentSelectedSkin = getCurrentSelectedSkin();
 		if (currentSelectedSkin != null) {
 			if (StringUtils.equals(skin, currentSelectedSkin)) {
@@ -86,14 +89,14 @@ public class SkinSelectorController extends SimpleFormController {
 	}
 
 	private String processNeoSkinName(String skin) {
-      String portalNeoprefix = ServerConfigurationService.getString("portal.neoprefix");
-      if (StringUtils.startsWith(skin, portalNeoprefix)) {
-         return StringUtils.removeStart(skin, portalNeoprefix);
-      }
-      return skin;
-   }
+		String portalNeoprefix = ServerConfigurationService.getString(PORTAL_SKIN_NEOPREFIX_PROPERTY, PORTAL_SKIN_NEOPREFIX_DEFAULT);
+		if (StringUtils.startsWith(skin, portalNeoprefix)) {
+			return StringUtils.removeStart(skin, portalNeoprefix);
+		}
+		return skin;
+	}
 
-   @Override
+	@Override
 	protected Object formBackingObject(HttpServletRequest request) throws Exception {
 		SkinSelectValueObject mySkinSelectValueObject = new SkinSelectValueObject();
 		// Before bind, set the current skin
