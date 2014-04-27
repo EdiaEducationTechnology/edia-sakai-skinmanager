@@ -5,6 +5,8 @@
 			init-method="init" destroy-method="destroy">
 		<property name="skinFileSystemService" ref="nl.edia.sakai.tool.skinmanager.SkinFileSystemService"/>
 		<property name="skinArchiveService" ref="nl.edia.sakai.tool.skinmanager.SkinArchiveService"/>
+		<property name="portalService" ref="org.sakaiproject.portal.api.PortalService"/>
+		<property name="functionManager" ref="org.sakaiproject.authz.api.FunctionManager"/>
 	</bean>
 	
 	<bean id="nl.edia.sakai.tool.skinmanager.SkinFileSystemService" class="nl.edia.sakai.tool.skinmanager.impl.SkinFileSystemServiceImpl"></bean>

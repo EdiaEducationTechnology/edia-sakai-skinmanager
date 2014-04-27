@@ -21,6 +21,7 @@ package nl.edia.sakai.tool.skinmanager;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 
 import org.apache.commons.fileupload.FileItem;
 import org.springframework.web.multipart.MultipartFile;
@@ -44,12 +45,12 @@ public class FileUploadAction extends AbstractAction {
 			if (context.getAttributes().getBoolean("new")) {
 
 				String mySkinId = requestParameters.getRequired("id");
-				skinService.createSkin(mySkinId, inputStream);
+				skinService.createSkin(mySkinId, inputStream, new Date());
 			} else {
 
 				String mySkinId = context.getFlowScope()
 						.getRequiredString("id");
-				skinService.updateSkin(mySkinId, inputStream);
+				skinService.updateSkin(mySkinId, inputStream, new Date());
 			}
 		} else {
 			throw new IllegalArgumentException("Required attribute '"

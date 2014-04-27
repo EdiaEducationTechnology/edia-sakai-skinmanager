@@ -39,11 +39,13 @@ import nl.edia.sakai.tool.skinmanager.model.SkinArchive;
 import nl.edia.sakai.tool.skinmanager.model.SkinDirectory;
 import nl.edia.sakai.tool.util.SakaiUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.sakaiproject.authz.cover.FunctionManager;
+import org.sakaiproject.authz.api.FunctionManager;
 import org.sakaiproject.component.cover.ServerConfigurationService;
 import org.sakaiproject.exception.PermissionException;
+import org.sakaiproject.portal.api.PortalService;
 import org.sakaiproject.site.api.Site;
 
 public class SkinServiceImpl implements SkinService {
@@ -55,9 +57,13 @@ public class SkinServiceImpl implements SkinService {
 	private static final int INTERVAL_REDEPLOY = 30 * 1000;
 	private static final int INTERVAL_WAIT = 10 * 1000;
 
-	SkinFileSystemService skinFileSystemService;
+	protected SkinFileSystemService skinFileSystemService;
 
-	SkinArchiveService skinArchiveService;
+	protected SkinArchiveService skinArchiveService;
+	
+	protected PortalService portalService;
+	
+	protected FunctionManager functionManager;
 
 	boolean isArchiveLeading = true;
 	
@@ -69,15 +75,17 @@ public class SkinServiceImpl implements SkinService {
 	 * @see nl.edia.sakai.tool.skinmanager.SkinService#createSkin(java.lang.String, java.io.InputStream)
 	 */
 	@Override
-	public void createSkin(String name, InputStream data) throws SkinException, IOException {
+	public void createSkin(String name, InputStream data, Date date) throws SkinException, IOException {
 		checkAction(Permissions.PERMISSION_EDIA_SAKAI_SKININSTALL_CREATE);
-
+		
 		byte[] myFileData = readStream(data);
-		final Date date = skinArchiveService.fetchSkinArchiveDate(name);
-
+		if (date == null) {
+			date = skinArchiveService.fetchSkinArchiveDate(name);
+		}
+		
 		skinFileSystemService.createSkin(name, new ByteArrayInputStream(myFileData), date, false);
-		createArchive(name, myFileData);
-
+		createArchive(name, myFileData, date);
+		
 		SakaiUtils.createModificationEvent(Permissions.PERMISSION_EDIA_SAKAI_SKININSTALL_CREATE, "skin:" + name);
 	}
 
@@ -99,10 +107,28 @@ public class SkinServiceImpl implements SkinService {
 		checkAction(org.sakaiproject.site.api.SiteService.SITE_VISIT);
 		List<SkinDirectory> myFetchInstalledSkins = skinFileSystemService.fetchInstalledSkins();
 		List<String> myList = new ArrayList<String>(myFetchInstalledSkins.size());
-		for (SkinDirectory mySkinDirectory : myFetchInstalledSkins) {
-			myList.add(mySkinDirectory.getName());
+		for (SkinDirectory dir : myFetchInstalledSkins) {
+			myList.add(dir.getName());
         }
 		return myList;
+	}
+	/* (non-Javadoc)
+	 * @see nl.edia.sakai.tool.skinmanager.SkinService#fetchAvailableSkinNames()
+	 */
+	@Override
+	public List<String> fetchAvailableSkinNames() throws SkinException, IOException {
+		// Maybe a bit fanatic, but at least check if the user is supposed to be here
+		checkAction(org.sakaiproject.site.api.SiteService.SITE_VISIT);
+		List<SkinDirectory> installedSkins = skinFileSystemService.fetchInstalledSkins();
+		List<String> rv = new ArrayList<String>(installedSkins.size());
+		String skinPrefix = portalService.getSkinPrefix();
+		for (SkinDirectory dir : installedSkins) {
+			String name = dir.getName();
+			if (StringUtils.isEmpty(skinPrefix) || StringUtils.startsWith(name, skinPrefix)) {
+				rv.add(name);
+			}
+		}
+		return rv;
 	}
 
 	/* (non-Javadoc)
@@ -161,10 +187,10 @@ public class SkinServiceImpl implements SkinService {
 	 * @throws Exception
 	 */
 	public void init() throws Exception {
-		FunctionManager.registerFunction(Permissions.PERMISSION_EDIA_SAKAI_SKININSTALL_VIEW);
-		FunctionManager.registerFunction(Permissions.PERMISSION_EDIA_SAKAI_SKININSTALL_CREATE);
-		FunctionManager.registerFunction(Permissions.PERMISSION_EDIA_SAKAI_SKININSTALL_EDIT);
-		FunctionManager.registerFunction(Permissions.PERMISSION_EDIA_SAKAI_SKININSTALL_DELETE);
+		functionManager.registerFunction(Permissions.PERMISSION_EDIA_SAKAI_SKININSTALL_VIEW);
+		functionManager.registerFunction(Permissions.PERMISSION_EDIA_SAKAI_SKININSTALL_CREATE);
+		functionManager.registerFunction(Permissions.PERMISSION_EDIA_SAKAI_SKININSTALL_EDIT);
+		functionManager.registerFunction(Permissions.PERMISSION_EDIA_SAKAI_SKININSTALL_DELETE);
 		
 		final int waitIntervalRetry = ServerConfigurationService.getInt("skinmanager.sync.interval", INTERVAL_REDEPLOY);
 		final boolean activeSync = ServerConfigurationService.getBoolean("skinmanager.sync.continious", BOOLEAN_ACTIVE_SYNC);
@@ -334,7 +360,7 @@ public class SkinServiceImpl implements SkinService {
 			if (version < myLatestVersion) {
 				ByteArrayOutputStream myOutputStream = new ByteArrayOutputStream();
 				skinArchiveService.fetchSkinArchiveData(name, version, myOutputStream);
-				updateSkin(name, myOutputStream.toByteArray(), "Reverted to version " + version);
+				updateSkin(name, myOutputStream.toByteArray(), "Reverted to version " + version, null);
 			}
 		}
 	}
@@ -357,8 +383,8 @@ public class SkinServiceImpl implements SkinService {
 	 * @see nl.edia.sakai.tool.skinmanager.SkinService#updateSkin(java.lang.String, java.io.InputStream)
 	 */
 	@Override
-	public void updateSkin(String name, InputStream data) throws SkinException, IOException {
-		updateSkin(name, readStream(data), null);
+	public void updateSkin(String name, InputStream data, Date date) throws SkinException, IOException {
+		updateSkin(name, readStream(data), null, date);
 	}
 
 	protected void checkAction(String myAction) throws ActionNotAlowedException {
@@ -399,19 +425,31 @@ public class SkinServiceImpl implements SkinService {
 
 	}
 
-	private void createArchive(String name, byte[] myFileData) throws SkinException, IOException {
+	private void createArchive(String name, byte[] myFileData, Date date) throws SkinException, IOException {
 		SkinDirectory myNewSkin = skinFileSystemService.findSkin(name);
-		skinArchiveService.createSkinArchive(name, new ByteArrayInputStream(myFileData), myNewSkin
-				.getLastModified(), "");
+		if (date == null) {
+			date = myNewSkin.getLastModified();
+		}
+		skinArchiveService.createSkinArchive(name, new ByteArrayInputStream(myFileData), date, "");
 	}
 
-	private void updateSkin(String name, byte[] myFileData, @SuppressWarnings("unused") String comment) throws ActionNotAlowedException, SkinException,
+	private void updateSkin(String name, byte[] myFileData, String comment, Date date) throws ActionNotAlowedException, SkinException,
 			IOException {
 		checkAction(Permissions.PERMISSION_EDIA_SAKAI_SKININSTALL_EDIT);
-		Date date = skinArchiveService.fetchSkinArchiveDate(name);
+		if (date == null) {
+			date = skinArchiveService.fetchSkinArchiveDate(name);
+		}
 		skinFileSystemService.updateSkin(name, date, new ByteArrayInputStream(myFileData));
-		createArchive(name, myFileData);
+		createArchive(name, myFileData, date);
 		SakaiUtils.createModificationEvent(Permissions.PERMISSION_EDIA_SAKAI_SKININSTALL_VIEW, "skin:" + name);
+	}
+
+	public void setPortalService(PortalService portalService) {
+		this.portalService = portalService;
+	}
+
+	public void setFunctionManager(FunctionManager functionManager) {
+		this.functionManager = functionManager;
 	}
 
 }

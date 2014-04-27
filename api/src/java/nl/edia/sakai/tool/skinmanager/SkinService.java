@@ -21,6 +21,7 @@ package nl.edia.sakai.tool.skinmanager;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.List;
 
 import nl.edia.sakai.tool.skinmanager.model.SkinArchive;
@@ -45,6 +46,19 @@ public interface SkinService {
 	 * @throws IOException, in case of any IO error. Should be handled as unexpected and unrecovable. 
 	 */
 	public List<SkinDirectory> fetchInstalledSkins() throws SkinException, IOException;
+	
+	
+	/**
+	 * <p>
+	 * Gets all available skins. These are all skins that are available to the current rendering engine.
+	 * </p>
+	 * @return
+	 * @throws SkinException, in case of any configuration problem, usually when the skin dir cannot
+	 * be found or is unreadable.
+	 * Should be treated as expected with respect to the business logic.
+	 * @throws IOException, in case of any IO error. Should be handled as unexpected and unrecovable. 
+	 */
+	public List<String> fetchAvailableSkinNames() throws SkinException, IOException;
 	
 
 	/**
@@ -72,7 +86,7 @@ public interface SkinService {
 	 * @throws SkinException 
 	 */
 	public SkinDirectory findSkin(String id) throws SkinException, IOException;
-	
+
 	/**
 	 * <p>
 	 * Creates a new skin, with the given name and containing the contents of the file.
@@ -80,24 +94,26 @@ public interface SkinService {
 	 * </p>
 	 * @param name
 	 * @param file
+	 * @param date
 	 * @throws SkinException, in case of an existing skin with the same name, or an illegal attempt 
 	 * to overwrite an existing skin.
 	 * Should be treated as expected with respect to the business logic.
 	 * @throws IOException, in case of any IO error. Should be handled as unexpected and unrecovable. 
 	 */
-	public void createSkin(String name, InputStream data) throws SkinException, IOException;
+	public void createSkin(String name, InputStream data, Date date) throws SkinException, IOException;
 	/**
 	 * <p>
 	 * Updates and overwrites an existing skin. The current skin is removed completely from the 
 	 * file system and a archive of the new skin is created.
 	 * </p>
 	 * @param name
+	 * @param date TODO
 	 * @param file
 	 * @throws SkinException in case of any illegal state or operation. 
 	 * Should be treated as expected with respect to the business logic.
 	 * @throws IOException, in case of any IO error. Should be handled as unexpected and unrecovable. 
 	 */
-	public void updateSkin(String name, InputStream data) throws SkinException, IOException;
+	public void updateSkin(String name, InputStream data, Date date) throws SkinException, IOException;
 	/**
 	 * <p>
 	 * Removes an existing skin from the file system and makes it invisbile 

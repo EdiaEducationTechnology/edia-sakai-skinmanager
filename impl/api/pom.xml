@@ -58,6 +58,11 @@
       <groupId>commons-lang</groupId>
       <artifactId>commons-lang</artifactId>
     </dependency>
+    <dependency>
+       <groupId>org.sakaiproject.portal</groupId>
+       <artifactId>sakai-portal-api</artifactId>
+       <version>2.9.3-UVA-0.0.1-SNAPSHOT</version>
+    </dependency>
   </dependencies>
   <build>
     <resources />

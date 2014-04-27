@@ -31,18 +31,17 @@ import org.apache.commons.lang.StringUtils;
 import org.sakaiproject.component.cover.ServerConfigurationService;
 import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.exception.PermissionException;
+import org.sakaiproject.portal.api.PortalService;
 import org.sakaiproject.site.api.Site;
 import org.sakaiproject.site.api.SiteService;
-import org.sakaiproject.util.SakaiComponentEvent;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
 public class SkinSelectorController extends SimpleFormController {
 	protected SkinService skinService;
 	
-	private static final String PORTAL_SKIN_NEOPREFIX_PROPERTY = "portal.neoprefix";
-	private static final String PORTAL_SKIN_NEOPREFIX_DEFAULT = "neo-";
-
+	protected PortalService portalService;
+	
 	@Override
 	protected ModelAndView onSubmit(Object command) throws Exception {
 		SkinSelectValueObject myValueObject = (SkinSelectValueObject) command;
@@ -89,10 +88,10 @@ public class SkinSelectorController extends SimpleFormController {
 	}
 
 	private String processNeoSkinName(String skin) {
-		String portalNeoprefix = ServerConfigurationService.getString(PORTAL_SKIN_NEOPREFIX_PROPERTY, PORTAL_SKIN_NEOPREFIX_DEFAULT);
-		if (StringUtils.startsWith(skin, portalNeoprefix)) {
-			return StringUtils.removeStart(skin, portalNeoprefix);
-		}
+//		String skinPrefix = portalService.getSkinPrefix();
+//		if (StringUtils.startsWith(skin, skinPrefix)) {
+//			return StringUtils.removeStart(skin, skinPrefix);
+//		}
 		return skin;
 	}
 
@@ -112,7 +111,7 @@ public class SkinSelectorController extends SimpleFormController {
 	protected Map<String, Object> referenceData(HttpServletRequest request) throws Exception {
 		Map<String, Object> myData = new HashMap<String, Object>();
 		// Into page context: skins
-		myData.put("skins", skinService.fetchInstalledSkinNames());
+		myData.put("skins", skinService.fetchAvailableSkinNames());
 		// Into page context: hasPermission, this var is not a simple permission, but one of 3, see 
 		// the source of org.sakaiproject.site.impl.BaseSiteService#save for details
 		myData.put("hasPermission", SakaiUtils.hasPermission(SiteService.SECURE_UPDATE_SITE) || SakaiUtils.hasPermission(SiteService.SECURE_UPDATE_SITE_MEMBERSHIP)
