@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>Skin Manager: Skin File</title>
+<style type="text/css">
+		/* Style for specific inline images */
+		
+		/* Style for specific ordered lists */
+		
+		/* Style for specific table cells */
+		</style>
+<link type="text/css" href="/library/skin/tool_base.css" media="all"
+	rel="stylesheet" />
+<link type="text/css" href="/library/skin/default/tool.css" media="all"
+	rel="stylesheet" />
+</head>
+<body>
+<div class="helpBody">
+<h2>Skin Manager: Skin File</h2>
+<h3>Structure of the Skin File</h3>
+<p>Skins can be uploaded/updated by a zip file. This zip file will
+replace the entire contents of the skin with the specific name. The
+existing directory will be expunged before installation, so updates will
+not "add" archives, but rather "replace" the entire skin.</p>
+
+<p>Skin zip files has the following rules concerning its contents.
+All files that not match these criteria will be ignored. The skin
+manager will silently ignore these files, these files will also not be
+stored in the archive.</p>
+<ol>
+	<li>All css files must be located in the root.</li>
+	<li>There must be a directory <strong>images</strong></li>
+	<li>Only image files (png|gif|jpg|jpeg|tif|tiff) may be located in
+	the directory <strong>images</strong></li>
+	<li>All other files are ignored</li>
+</ol>
+
+<p>A typical layout of zip file is:</p>
+<table border="1">
+	<tr>
+		<th>Path</th>
+		<th>Type</th>
+		<th>Description</th>
+	</tr>
+	<tr>
+		<td>portal.css</td>
+		<td>css</td>
+		<td>The portal stylesheet</td>
+	</tr>
+	<tr>
+		<td>tool.css</td>
+		<td>css</td>
+		<td>The stylesheet for the tools</td>
+	</tr>
+	<tr>
+		<td>images/</td>
+		<td>directory</td>
+		<td>The image directory</td>
+	</tr>
+	<tr>
+		<td>images/*</td>
+		<td>png|gif|jpg|jpeg|tif|tiff</td>
+		<td>Images</td>
+	</tr>
+</table>
+<p>A skin may <strong>not</strong> contain:</p>
+<ul>
+	<li>Anything that contains a the characters ".."</li>
+	<li>Any path that starts with "/"</li>
+	<li>Any file that attempts to locate itself outside it's root
+	directory.</li>
+</ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+		"http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="nl.edia.sakai.tool.skinmanager.SkinService" class="nl.edia.sakai.tool.skinmanager.impl.SkinServiceImpl" 
+			init-method="init" destroy-method="destroy">
+		<property name="skinFileSystemService" ref="nl.edia.sakai.tool.skinmanager.SkinFileSystemService"/>
+		<property name="skinArchiveService" ref="nl.edia.sakai.tool.skinmanager.SkinArchiveService"/>
+		<property name="portalService" ref="org.sakaiproject.portal.api.PortalService"/>
+		<property name="functionManager" ref="org.sakaiproject.authz.api.FunctionManager"/>
+	</bean>
+	
+	<bean id="nl.edia.sakai.tool.skinmanager.SkinFileSystemService" class="nl.edia.sakai.tool.skinmanager.impl.SkinFileSystemServiceImpl"></bean>
+	
+	<!-- Put in as target -->
+	<bean id="nl.edia.sakai.tool.skinmanager.SkinArchiveServiceTarget" class="nl.edia.sakai.tool.skinmanager.impl.SkinArchiveServiceImpl">
+		<property name="sessionFactory" ref="org.sakaiproject.springframework.orm.hibernate.GlobalSessionFactory" />	
+	</bean>
+		
+		<!-- put the DAO in a transaction proxy -->
+	<bean id="nl.edia.sakai.tool.skinmanager.SkinArchiveService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="proxyInterfaces">
+			<set>
+				<value>nl.edia.sakai.tool.skinmanager.SkinArchiveService</value>
+			</set>
+		</property>
+		<property name="transactionManager" ref="org.sakaiproject.springframework.orm.hibernate.GlobalTransactionManager" />	
+		<property name="target" ref="nl.edia.sakai.tool.skinmanager.SkinArchiveServiceTarget" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+		
+</beans>

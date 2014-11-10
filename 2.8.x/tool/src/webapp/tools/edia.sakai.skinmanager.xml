@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+
+<registration>
+
+	<tool 
+		id="edia.sakai.skinmanager" 
+		title="Skin Manager" 
+		description="Skin Manager by Edia Educatie Technologie (http://www.edia.nl)" 
+		accessSecurity="tool">
+
+		<!-- Configure categories -->
+		<category name="sakai.sample" />
+		<category name="course" />
+		<category name="project" />
+		<category name="myworkspace" />
+
+		<!-- Configure title bar for portal -->
+		<configuration name="reset.button" value="true" />
+		<configuration name="help.button" value="true" />
+		<!-- SM-10, Add functions.require to the configuration options of the Skin Selector. -->
+		<configuration name="functions.require" value="skinmanager.view" /> 		
+		<!-- 
+		<configuration name="help.id" value="edia.sakai.skinmanager" type="final" />
+		 -->
+	</tool>
+</registration>
