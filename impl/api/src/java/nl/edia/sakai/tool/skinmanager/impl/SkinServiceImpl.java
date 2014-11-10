@@ -121,12 +121,9 @@ public class SkinServiceImpl implements SkinService {
 		checkAction(org.sakaiproject.site.api.SiteService.SITE_VISIT);
 		List<SkinDirectory> installedSkins = skinFileSystemService.fetchInstalledSkins();
 		List<String> rv = new ArrayList<String>(installedSkins.size());
-		String skinPrefix = portalService.getSkinPrefix();
 		for (SkinDirectory dir : installedSkins) {
 			String name = dir.getName();
-			if (StringUtils.isEmpty(skinPrefix) || StringUtils.startsWith(name, skinPrefix)) {
-				rv.add(name);
-			}
+			rv.add(name);
 		}
 		return rv;
 	}
