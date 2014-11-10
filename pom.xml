@@ -78,9 +78,9 @@
     </dependencies>
   </dependencyManagement>
   <scm>
-    <connection>scm:svn:https://source.sakaiproject.org/contrib/edia/skin-manager/trunk</connection>
-    <developerConnection>scm:svn:https://source.sakaiproject.org/contrib/edia/skin-manager/trunk</developerConnection>
-    <url>https://source.sakaiproject.org/contrib/edia/skin-manager/trunk</url>
+    <connection>scm:svn:https://source.sakaiproject.org/contrib/edia/skin-manager/branches/2.8.x</connection>
+    <developerConnection>scm:svn:https://source.sakaiproject.org/contrib/edia/skin-manager/branches/2.8.x</developerConnection>
+    <url>https://source.sakaiproject.org/contrib/edia/skin-manager/branches/2.8.x</url>
   </scm>
   <build>
     <resources>
