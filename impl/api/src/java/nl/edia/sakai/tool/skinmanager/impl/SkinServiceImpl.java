@@ -200,14 +200,6 @@ public class SkinServiceImpl implements SkinService {
 					try {
 						syncDatabaseAndFileSystem();
 						initialDeployDone = true;
-						synchronized (SkinServiceImpl.this) {
-							try {
-								SkinServiceImpl.this.wait(waitIntervalRetry);
-							} catch (InterruptedException e1) {
-								// Just die.
-								return;
-							}
-						}
 					} catch (SkinPrerequisitesNonFatalException e) {
 						log.info("Non-fatal problem attempting to init the skin manager service, retrying in " + (INTERVAL_REDEPLOY/1000) + " seconds", e);
 					} catch (SkinException e) {
@@ -216,6 +208,14 @@ public class SkinServiceImpl implements SkinService {
 					} catch (IOException e) {
 						log.error("Fatal problem attempting to init the skin manager service", e);
 						initialDeployDone = true;
+					}
+					synchronized (SkinServiceImpl.this) {
+						try {
+							SkinServiceImpl.this.wait(waitIntervalRetry);
+						} catch (InterruptedException e1) {
+							// Just die.
+							return;
+						}
 					}
 				}
 			}
