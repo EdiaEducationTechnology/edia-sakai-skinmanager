@@ -20,8 +20,7 @@
 		<p class="discTria">
 			<spring:message  code="page.new.label.upload"/>
 		</p>
-    	<form action="skinmanager.spring" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
-      		<input type="hidden" name="_flowExecutionKey" value="${flowExecutionKey}"/>
+    	<form action="${flowExecutionUrl}" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
       		<input type="hidden" name="_eventId" id="_eventId" value="submit"/>
 	  		<h4><spring:message  code="page.new.label.upload.file"/></h4>
 			<p class="shorttext">

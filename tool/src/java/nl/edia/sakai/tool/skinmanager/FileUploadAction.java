@@ -31,6 +31,8 @@ import org.springframework.webflow.core.collection.ParameterMap;
 import org.springframework.webflow.execution.Event;
 import org.springframework.webflow.execution.RequestContext;
 
+import javax.servlet.http.HttpServletRequest;
+
 public class FileUploadAction extends AbstractAction {
 	private SkinService skinService;
 
@@ -70,8 +72,8 @@ public class FileUploadAction extends AbstractAction {
 			if (file != null) {
 				inputStream = file.getInputStream();
 			} else {
-				Object attribute = ((ServletExternalContext) context
-						.getExternalContext()).getRequest().getAttribute(
+				Object attribute = ((HttpServletRequest)((ServletExternalContext) context
+						.getExternalContext()).getNativeRequest()).getAttribute(
 						fileParameterName);
 				if (attribute instanceof FileItem) {
 					inputStream = ((FileItem) attribute).getInputStream();

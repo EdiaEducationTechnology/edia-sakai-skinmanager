@@ -34,20 +34,28 @@ import org.sakaiproject.exception.PermissionException;
 import org.sakaiproject.portal.api.PortalService;
 import org.sakaiproject.site.api.Site;
 import org.sakaiproject.site.api.SiteService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.SimpleFormController;
 
-public class SkinSelectorController extends SimpleFormController {
+@Controller
+@RequestMapping("/*")
+public class SkinSelectorController {
+
+	@Autowired
 	protected SkinService skinService;
-	
+
+	@Autowired
 	protected PortalService portalService;
-	
-	@Override
-	protected ModelAndView onSubmit(Object command) throws Exception {
-		SkinSelectValueObject myValueObject = (SkinSelectValueObject) command;
+
+	@RequestMapping(method = RequestMethod.POST)
+	protected ModelAndView onSubmit(@ModelAttribute SkinSelectValueObject command) throws Exception {
 		Map<String, Object> myData = new HashMap<String, Object>();
-		if (myValueObject != null && myValueObject.getSkin() != null) {
-			String mySkin = myValueObject.getSkin();
+		if (command != null && command.getSkin() != null) {
+			String mySkin = command.getSkin();
 			// We use a POST,REDIRECT,GET pattern, so after updating the skin
 			// we redirect and will end up at the get, formBackingObject will
 			// now return the updated skin as current selected skin.
@@ -59,7 +67,7 @@ public class SkinSelectorController extends SimpleFormController {
 		}
 
 
-		return new ModelAndView(getSuccessView(), myData);
+		return new ModelAndView("index.html", myData);
 	}
 
 	protected boolean updateCurrentSite(String skin) throws PermissionException {
@@ -95,7 +103,7 @@ public class SkinSelectorController extends SimpleFormController {
 		return skin;
 	}
 
-	@Override
+	@ModelAttribute("command")
 	protected Object formBackingObject(HttpServletRequest request) throws Exception {
 		SkinSelectValueObject mySkinSelectValueObject = new SkinSelectValueObject();
 		// Before bind, set the current skin
@@ -107,16 +115,16 @@ public class SkinSelectorController extends SimpleFormController {
 		return mySkinSelectValueObject;
 	}
 
-	@Override
-	protected Map<String, Object> referenceData(HttpServletRequest request) throws Exception {
-		Map<String, Object> myData = new HashMap<String, Object>();
+	@RequestMapping(method = RequestMethod.GET)
+	protected ModelAndView referenceData(HttpServletRequest request) throws Exception {
+		Map<String, Object> data = new HashMap<String, Object>();
 		// Into page context: skins
-		myData.put("skins", skinService.fetchAvailableSkinNames());
+		data.put("skins", skinService.fetchAvailableSkinNames());
 		// Into page context: hasPermission, this var is not a simple permission, but one of 3, see 
 		// the source of org.sakaiproject.site.impl.BaseSiteService#save for details
-		myData.put("hasPermission", SakaiUtils.hasPermission(SiteService.SECURE_UPDATE_SITE) || SakaiUtils.hasPermission(SiteService.SECURE_UPDATE_SITE_MEMBERSHIP)
+		data.put("hasPermission", SakaiUtils.hasPermission(SiteService.SECURE_UPDATE_SITE) || SakaiUtils.hasPermission(SiteService.SECURE_UPDATE_SITE_MEMBERSHIP)
 		        || SakaiUtils.hasPermission(SiteService.SECURE_UPDATE_GROUP_MEMBERSHIP));
-		return myData;
+		return new ModelAndView("index.html", data);
 	}
 
 	/**

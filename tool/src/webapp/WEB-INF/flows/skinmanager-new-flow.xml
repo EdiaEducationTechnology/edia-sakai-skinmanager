@@ -1,28 +1,16 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<flow xmlns="http://www.springframework.org/schema/webflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/webflow
-                          http://www.springframework.org/schema/webflow/spring-webflow-1.0.xsd">
-
-	<start-state idref="newSkin" />
-
-	<view-state id="newSkin" view="new">
-		<transition on="submit" to="uploadSkin">
-		</transition>
-		<transition on="cancel" to="finish" />
-	</view-state>
-
-	<action-state id="uploadSkin">
-		<evaluate-action expression="requestParameters.id">
-			<evaluation-result name="id" scope="flash" />
-		</evaluate-action>
-		<action bean="nl.edia.sakai.tool.skinmanager.UploadFileAction">
-			<attribute name="new" type="boolean" value="true"></attribute>
-		</action>
-		<transition on="success" to="finish" />
-		<transition on="error" to="newSkin" />
-		<transition on-exception="java.lang.Exception" to="newSkin"/>
-	</action-state>
-
-	<end-state id="finish" />
-
-</flow>
+<?xml version="1.0" encoding="UTF-8"?><webflow:flow xmlns:webflow="http://www.springframework.org/schema/webflow" xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" ns0:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" start-state="newSkin">
+	<webflow:view-state id="newSkin" view="../jsp/new.jsp">
+		<webflow:transition on="submit" to="uploadSkin"/>
+		<webflow:transition on="cancel" to="finish"/>
+	</webflow:view-state>
+	<webflow:action-state id="uploadSkin">
+		<webflow:evaluate expression="requestParameters.id" result="flashScope.id"/>
+		<webflow:evaluate expression="uploadFileAction">
+			<webflow:attribute name="new" value="true" type="boolean"/>
+		</webflow:evaluate>
+		<webflow:transition on="success" to="finish"/>
+		<webflow:transition on="error" to="newSkin"/>
+		<webflow:transition on-exception="java.lang.Exception" to="newSkin"/>
+	</webflow:action-state>
+	<webflow:end-state id="finish"/>
+</webflow:flow>

@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
-
-<beans>
-	<import resource="controllers.xml" />
+<beans xmlns="http://www.springframework.org/schema/beans"
+			 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			 xmlns:context="http://www.springframework.org/schema/context" xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">	<import resource="controllers.xml" />
 	<import resource="interceptors.xml" />
 	<bean id="nl.edia.sakai.tool.skinmanager.HandlerMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
-		<property name="interceptors">
-			<list>
-				<ref bean="nl.edia.sakai.tool.skinmanager.SessionContinuationHandlerInterceptor" />
-			</list>
-		</property>
+		<!--<property name="interceptors">-->
+			<!--<list>-->
+				<!--<ref bean="nl.edia.sakai.tool.skinmanager.SessionContinuationHandlerInterceptor" />-->
+			<!--</list>-->
+		<!--</property>-->
 		<property name="mappings">
 			<props>
 				<prop key="skinmanager.spring">nl.edia.sakai.tool.skinmanager.FlowController</prop>
@@ -46,6 +47,4 @@
 		<property name="basename" value="Messages-SkinManager" />
 		<property name="useCodeAsDefaultMessage" value="true" />
 	</bean>
-
-
 </beans>

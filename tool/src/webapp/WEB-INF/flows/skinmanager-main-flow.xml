@@ -1,43 +1,25 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<flow xmlns="http://www.springframework.org/schema/webflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/webflow
-                          http://www.springframework.org/schema/webflow/spring-webflow-1.0.xsd">
-
-	<start-state idref="listSkins" />
-
-	<view-state id="listSkins" view="index">
-		<render-actions>
-			<bean-action bean="nl.edia.sakai.tool.skinmanager.SkinService" method="fetchInstalledSkins">
-				<method-result name="skins" />
-			</bean-action >
-		</render-actions>
-		<transition on="edit" to="viewDetail" />
-		<transition on="new" to="newSkin" />
-		<transition on-exception="nl.edia.sakai.tool.skinmanager.SkinException" to="showAccessDenied"/>
-		<transition on-exception="java.lang.Exception" to="showError"/>
-	</view-state>
-
-	<view-state id="showError" view="error">
-		<transition on="retry" to="finish" />
-	</view-state>
-	
-	<view-state id="showAccessDenied" view="accessdenied">
-		<transition on="retry" to="finish" />
-	</view-state>
-
-
-	<subflow-state flow="skinmanager-detail-flow" id="viewDetail">
-		<attribute-mapper>
-			<input-mapper>
-				<mapping source="requestParameters.id" target="id" required="true"/>
-			</input-mapper>
-		</attribute-mapper>		
-		<transition on="finish" to="finish" />
-	</subflow-state>
-
-	<subflow-state flow="skinmanager-new-flow" id="newSkin">
-		<transition on="finish" to="finish" />
-	</subflow-state>
-
-	<end-state id="finish" view="flowRedirect:skinmanager-main-flow" />
-</flow>
+<?xml version="1.0" encoding="UTF-8"?><webflow:flow xmlns:webflow="http://www.springframework.org/schema/webflow" xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" ns0:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" start-state="listSkins">
+	<webflow:view-state id="listSkins" view="../jsp/index.jsp">
+		<webflow:on-render>
+			<webflow:evaluate expression="skinService.fetchInstalledSkins()" result="viewScope.skins"/>
+		</webflow:on-render>
+		<webflow:transition on="edit" to="viewDetail"/>
+		<webflow:transition on="new" to="newSkin"/>
+		<webflow:transition on-exception="nl.edia.sakai.tool.skinmanager.SkinException" to="showAccessDenied"/>
+		<webflow:transition on-exception="java.lang.Exception" to="showError"/>
+	</webflow:view-state>
+	<webflow:view-state id="showError" view="../jsp/error.jsp">
+		<webflow:transition on="retry" to="finish"/>
+	</webflow:view-state>
+	<webflow:view-state id="showAccessDenied" view="../jsp/accessdenied.jsp">
+		<webflow:transition on="retry" to="finish"/>
+	</webflow:view-state>
+	<webflow:subflow-state id="viewDetail" subflow="skinmanager-detail-flow">
+		<webflow:input name="id" value="requestParameters.id" required="true"/>
+		<webflow:transition on="finish" to="finish"/>
+	</webflow:subflow-state>
+	<webflow:subflow-state id="newSkin" subflow="skinmanager-new-flow">
+		<webflow:transition on="finish" to="finish"/>
+	</webflow:subflow-state>
+	<webflow:end-state id="finish" view="externalRedirect:skinmanager.spring?_flowId=skinmanager-main-flow"/>
+</webflow:flow>

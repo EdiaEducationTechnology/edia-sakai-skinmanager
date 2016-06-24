@@ -1,112 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flow xmlns="http://www.springframework.org/schema/webflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/webflow
-                          http://www.springframework.org/schema/webflow/spring-webflow-1.0.xsd">
-	<input-mapper>
-		<input-attribute name="id" scope="flow" required="true"/>
-	</input-mapper>
-
-	<start-state idref="viewDetail" />
-
-	<view-state id="viewDetail" view="detail">
-		<render-actions>
-			<bean-action bean="nl.edia.sakai.tool.skinmanager.SkinService" method="findSkin">
-				<method-arguments>
-					<argument expression="flowScope.id" parameter-type="string"/>
-				</method-arguments>
-				<method-result name="skin" scope="flash"/>
-			</bean-action>
-			<bean-action bean="nl.edia.sakai.tool.skinmanager.SkinService" method="findSites">
-				<method-arguments>
-					<argument expression="flowScope.id" parameter-type="string"/>
-				</method-arguments>
-				<method-result name="sites" scope="request"/>
-			</bean-action> 
-		</render-actions>
-		<transition on="update" to="updateSkin" />
-		<transition on="delete" to="deleteConfirm" />
-		<transition on="history" to="viewSkinHistory" />
-		<transition on="back" to="finish" />
-		<transition on-exception="java.lang.Exception" to="finish"/>
-	</view-state>
-
-	<view-state id="updateSkin" view="update">
-		<render-actions>
-			<bean-action bean="nl.edia.sakai.tool.skinmanager.SkinService" method="findSkin">
-				<method-arguments>
-					<argument expression="flowScope.id" parameter-type="string"/>
-				</method-arguments>
-				<method-result name="skin" scope="flash"/>
-			</bean-action>
-		</render-actions>
-		<transition on="submit" to="uploadSkin" />
-		<transition on="cancel" to="viewDetail" />
-		<transition on-exception="java.lang.Exception" to="updateSkin"/>
-	</view-state>
-
-	<view-state id="viewSkinHistory" view="history">
-		<render-actions>
-			<bean-action bean="nl.edia.sakai.tool.skinmanager.SkinService" method="findSkin">
-				<method-arguments>
-					<argument expression="flowScope.id" parameter-type="string"/>
-				</method-arguments>
-				<method-result name="skin" scope="flash"/>
-			</bean-action>
-			<bean-action bean="nl.edia.sakai.tool.skinmanager.SkinService" method="findSkinHistory">
-				<method-arguments>
-					<argument expression="flowScope.id" parameter-type="string"/>
-				</method-arguments>
-				<method-result name="history" scope="request"/>
-			</bean-action> 
-		</render-actions>
-		<transition on="back" to="viewDetail" />
-		<transition on="revert" to="revertSkin" />
-		<transition on-exception="java.lang.Exception" to="error"/>
-	</view-state>
-
-	<view-state id="deleteConfirm" view="deleteconfirm">
-		<render-actions>
-			<bean-action bean="nl.edia.sakai.tool.skinmanager.SkinService" method="findSkin">
-				<method-arguments>
-					<argument expression="flowScope.id" parameter-type="string"/>
-				</method-arguments>
-				<method-result name="skin" scope="flash"/>
-			</bean-action>
-		</render-actions>
-		<transition on="no" to="viewDetail" />
-		<transition on="yes" to="deleteSkin" />
-		<transition on-exception="java.lang.Exception" to="error"/>
-	</view-state>
-
-	<action-state id="uploadSkin">
-		<action bean="nl.edia.sakai.tool.skinmanager.UploadFileAction">
-			<attribute name="new" type="boolean" value="false"></attribute>
-		</action>
-		<transition on="success" to="viewDetail" />
-		<transition on-exception="java.lang.Exception" to="updateSkin"/>
-	</action-state>
-
-	<action-state id="deleteSkin">
-		<bean-action bean="nl.edia.sakai.tool.skinmanager.SkinService" method="removeSkin">
-			<method-arguments>
-				<argument expression="flowScope.id" parameter-type="string"/>
-			</method-arguments>
-		</bean-action>
-		<transition on="success" to="finish" />
-		<transition on-exception="java.lang.Exception" to="viewDetail"/>
-	</action-state>
-
-	<action-state id="revertSkin">
-		<bean-action bean="nl.edia.sakai.tool.skinmanager.SkinService" method="restoreSkinHistory">
-			<method-arguments>
-				<argument expression="flowScope.id" parameter-type="string"/>
-				<argument expression="requestParameters.version" parameter-type="int"/>
-			</method-arguments>
-		</bean-action>
-		<transition on="success" to="viewDetail" />
-		<transition on-exception="java.lang.Exception" to="viewSkinHistory"/>
-	</action-state>
-
-	<end-state id="finish" />
-
-</flow>
+<webflow:flow xmlns:webflow="http://www.springframework.org/schema/webflow"
+              xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance"
+              ns0:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+              start-state="viewDetail">
+  <webflow:input name="id"/>
+  <webflow:view-state id="viewDetail" view="../jsp/detail.jsp">
+    <webflow:on-render>
+      <webflow:evaluate expression="skinService.findSkin(id)" result="flashScope.skin"/>
+      <webflow:evaluate expression="skinService.findSites(id)" result="requestScope.sites"/>
+    </webflow:on-render>
+    <webflow:transition on="update" to="updateSkin"/>
+    <webflow:transition on="delete" to="deleteConfirm"/>
+    <webflow:transition on="history" to="viewSkinHistory"/>
+    <webflow:transition on="back" to="finish"/>
+    <webflow:transition on-exception="java.lang.Exception" to="finish"/>
+  </webflow:view-state>
+  <webflow:view-state id="updateSkin" view="../jsp/update.jsp">
+    <webflow:on-render>
+      <webflow:evaluate expression="skinService.findSkin(id)" result="flashScope.skin"/>
+    </webflow:on-render>
+    <webflow:transition on="submit" to="uploadSkin"/>
+    <webflow:transition on="cancel" to="viewDetail"/>
+    <webflow:transition on-exception="java.lang.Exception" to="updateSkin"/>
+  </webflow:view-state>
+  <webflow:view-state id="viewSkinHistory" view="../jsp/history.jsp">
+    <webflow:on-render>
+      <webflow:evaluate expression="skinService.findSkin(id)" result="flashScope.skin"/>
+      <webflow:evaluate expression="skinService.findSkinHistory(id)" result="requestScope.history"/>
+    </webflow:on-render>
+    <webflow:transition on="back" to="viewDetail"/>
+    <webflow:transition on="revert" to="revertSkin"/>
+    <webflow:transition on-exception="java.lang.Exception" to="error"/>
+  </webflow:view-state>
+  <webflow:view-state id="deleteConfirm" view="../jsp/deleteconfirm.jsp">
+    <webflow:on-render>
+      <webflow:evaluate expression="skinService.findSkin(id)" result="flashScope.skin"/>
+    </webflow:on-render>
+    <webflow:transition on="no" to="viewDetail"/>
+    <webflow:transition on="yes" to="deleteSkin"/>
+    <webflow:transition on-exception="java.lang.Exception" to="error"/>
+  </webflow:view-state>
+  <webflow:action-state id="uploadSkin">
+    <webflow:evaluate expression="uploadFileAction">
+      <webflow:attribute name="new" value="false" type="boolean"/>
+    </webflow:evaluate>
+    <webflow:transition on="success" to="viewDetail"/>
+    <webflow:transition on-exception="java.lang.Exception" to="updateSkin"/>
+  </webflow:action-state>
+  <webflow:action-state id="deleteSkin">
+    <webflow:evaluate expression="skinService.removeSkin(id)"/>
+    <webflow:transition on="success" to="finish"/>
+    <webflow:transition on-exception="java.lang.Exception" to="viewDetail"/>
+  </webflow:action-state>
+  <webflow:action-state id="revertSkin">
+    <webflow:evaluate expression="skinService.restoreSkinHistory(id, requestParameters.version)"/>
+    <webflow:transition on="success" to="viewDetail"/>
+    <webflow:transition on-exception="java.lang.Exception" to="viewSkinHistory"/>
+  </webflow:action-state>
+  <webflow:end-state id="finish"/>
+</webflow:flow>

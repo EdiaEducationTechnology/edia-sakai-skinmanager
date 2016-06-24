@@ -33,7 +33,7 @@
 						<c:when test="${status.index != 0}">
 							<est:allowed permission="skinmanager.edit">
 								<td>
-									<a href="skinmanager.spring?_flowExecutionKey=${flowExecutionKey}&amp;_eventId=revert&amp;version=${item.version}"><spring:message  code="page.history.action.revert"/></a>	
+									<a href="${flowExecutionUrl}&amp;_eventId=revert&amp;version=${item.version}"><spring:message  code="page.history.action.revert"/></a>	
 									|
 									<a href="skindownload.spring?id=${item.name}&amp;version=${item.version}"><spring:message  code="page.history.action.download"/></a>
 								</td>			

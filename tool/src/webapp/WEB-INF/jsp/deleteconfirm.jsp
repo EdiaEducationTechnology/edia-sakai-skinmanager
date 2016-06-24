@@ -11,8 +11,7 @@
 <body text="#000000" onload="<%= request.getAttribute("sakai.html.body.onload") %>">
 <div class="portletBody">
 	<h3><spring:message code="page.deleteconfirm.header" arguments="${skin.name}"/></h3>
-		<form action="skinmanager.spring" method="post">
-      <input type="hidden" name="_flowExecutionKey" value="${flowExecutionKey}"/>
+		<form action="${flowExecutionUrl}" method="post">
       <input type="hidden" name="_eventId" id="_eventId" value="no"/>
     	<p class="act">
 	      <input type="submit" class="active" value="Yes" onclick="document.getElementById('_eventId').value='yes';"/>

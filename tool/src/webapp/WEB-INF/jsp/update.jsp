@@ -17,8 +17,7 @@
 		<p class="discTria">
 			<spring:message  code="page.update.label.replace"/>
 		</p>
-    <form action="skinmanager.spring" method="post" enctype="multipart/form-data">
-      <input type="hidden" name="_flowExecutionKey" value="${flowExecutionKey}"/>
+    <form action="${flowExecutionUrl}" method="post" enctype="multipart/form-data">
       <input type="hidden" name="_eventId" id="_eventId" value="submit"/>
       <h4><spring:message  code="page.update.label.upload"/></h4>
       <p class="shorttext">

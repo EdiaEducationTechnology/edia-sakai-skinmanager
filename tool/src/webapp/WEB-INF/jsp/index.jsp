@@ -15,7 +15,9 @@
 			<a href="skinmanager.spring?_flowExecutionKey=${flowExecutionKey}&amp;_eventId=new"><spring:message  code="page.index.action.new"/></a>
 		</div>
 	</est:allowed>
+
 <h3><spring:message  code="page.index.header"/></h3>
+
 <est:allowed permission="skinmanager.view">
 	<div class="instruction"><spring:message  code="page.index.label.installed"/></div>
 	<table class="listHier lines" cellspacing="0">
@@ -28,7 +30,7 @@
 			<tr>
 				<td>
 					<est:allowed permission="skinmanager.view">
-						<a href="skinmanager.spring?_flowExecutionKey=${flowExecutionKey}&amp;_eventId=edit&amp;id=${skin.name}">
+						<a href="${flowExecutionUrl}&amp;_eventId=edit&amp;id=${skin.name}">
 					</est:allowed> 
 						${skin.name} 
 					<est:allowed permission="skinmanager.edit">
@@ -40,7 +42,7 @@
 			</tr>
 		</c:forEach>
 	</table>
-</est:allowed> 
+</est:allowed>
 </div>
 </body>
 </html>

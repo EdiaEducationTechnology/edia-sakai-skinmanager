@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://edia.nl/jsp/tags/edia-sakai-tags" prefix="est"%>
@@ -17,7 +17,7 @@
 </c:if>
 <c:if test="${not empty flowExecutionKey}">
 	<div>
-		<a href="skinmanager.spring?_flowExecutionKey=${flowExecutionKey}&amp;_eventId=retry">Opnieuw proberen</a>
+		<a href="${flowExecutionUrl}&amp;_eventId=retry">Opnieuw proberen</a>
 	</div>
 </c:if>
 <!-- 

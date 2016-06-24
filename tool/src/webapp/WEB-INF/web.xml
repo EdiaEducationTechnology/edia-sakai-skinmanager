@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app id="WebApp_ID" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+<web-app
+		xmlns="http://java.sun.com/xml/ns/javaee"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+		version="3.0">
 	<display-name>Edia Sakai Skin Manager</display-name>
 	<description>Edia Sakai Skin Manager</description>
 	<!-- list of components to load locally -->
@@ -26,7 +30,7 @@
 		<servlet-class>nl.edia.masla.sakai.tool.WebappToolServlet</servlet-class>
 		<init-param>
 			<param-name>first-page</param-name>
-			<param-value>/index.spring</param-value>
+			<param-value>skinmanager.spring?_flowId=skinmanager-main-flow</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
@@ -46,18 +50,27 @@
 		<dispatcher>INCLUDE</dispatcher>
 	</filter-mapping>
 
+	<filter-mapping>
+		<filter-name>sakai.request</filter-name>
+		<servlet-name>edia.skinmanager.dispatcher</servlet-name>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+
 	<servlet-mapping>
 		<servlet-name>edia.skinmanager.dispatcher</servlet-name>
 		<url-pattern>*.spring</url-pattern>
 	</servlet-mapping>
 
-	<!-- Sakai context loader -->
-	<listener>
-		<listener-class>org.sakaiproject.util.ContextLoaderListener</listener-class>
-	</listener>
 	<!-- Sakai tool listener -->
 	<listener>
 		<listener-class>org.sakaiproject.util.ToolListener</listener-class>
+	</listener>
+
+	<!-- Use the Sakai Spring application context wrapper to reach components. -->
+	<listener>
+		<listener-class>org.sakaiproject.util.SakaiContextLoaderListener</listener-class>
 	</listener>
 
 </web-app>

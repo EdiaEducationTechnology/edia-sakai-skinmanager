@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
-<beans>
+<beans xmlns="http://www.springframework.org/schema/beans"
+			 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			 xmlns:webflow="http://www.springframework.org/schema/webflow-config"
+			 xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+
+        http://www.springframework.org/schema/webflow-config
+           http://www.springframework.org/schema/webflow-config/spring-webflow-config-2.4.xsd">
 
 	<bean id="nl.edia.sakai.tool.skinmanager.FlowContinuationStartController" class="nl.edia.masla.spring.webflow.SessionContinuationController">
 		<property name="view" value="skinmanager.spring" />
 	</bean>
 
-	<bean name="nl.edia.sakai.tool.skinmanager.FlowController" class="org.springframework.webflow.executor.mvc.FlowController">
-		<property name="flowExecutor" ref="nl.edia.sakai.tool.skinmanager.FlowExecutor" />
-		<property name="defaultFlowId" value="skinmanager-main-flow" />
+
+	<bean name="nl.edia.sakai.tool.skinmanager.FlowController" class="org.springframework.webflow.mvc.servlet.FlowController">
+		<property name="flowExecutor" ref="flowExecutor" />
+		<property name="flowUrlHandler">
+			<bean class="nl.edia.sakai.tool.skinmanager.EdiaWebFlow1FlowUrlHandler"/>
+		</property>
 	</bean>
 
 	<bean id="nl.edia.sakai.tool.skinmanager.download.SkinDowloadController" class="nl.edia.sakai.tool.skinmanager.download.SkinDowloadController">
@@ -16,28 +24,24 @@
 		<property name="errorView" value="accessdenied" />
 	</bean>
 
-	<!-- Launches new flow executions and resumes existing executions: Spring 1.2 config version -->
-	<bean id="nl.edia.sakai.tool.skinmanager.FlowExecutor" class="org.springframework.webflow.config.FlowExecutorFactoryBean">
-		<property name="definitionLocator" ref="nl.edia.sakai.tool.skinmanager.FlowRegistry" />
-		<property name="executionAttributes">
-			<map>
-				<entry key="alwaysRedirectOnPause">
-					<value type="java.lang.Boolean">true</value>
-				</entry>
-			</map>
-		</property>
-		<property name="repositoryType" value="CONTINUATION" />
-	</bean>
+	<webflow:flow-executor id="flowExecutor">
+		<webflow:flow-execution-attributes>
+			<webflow:redirect-in-same-state value="false"/>
+		</webflow:flow-execution-attributes>
+	</webflow:flow-executor>
 
-	<!-- Creates the registry of flow definitions for this application: Spring 1.2 config version -->
-	<bean id="nl.edia.sakai.tool.skinmanager.FlowRegistry" class="org.springframework.webflow.engine.builder.xml.XmlFlowRegistryFactoryBean">
-		<property name="flowDefinitions">
-			<value>
-				skinmanager-main-flow=/WEB-INF/flows/skinmanager-main-flow.xml
-				skinmanager-detail-flow=/WEB-INF/flows/skinmanager-detail-flow.xml
-				skinmanager-new-flow=/WEB-INF/flows/skinmanager-new-flow.xml
-			</value>
-		</property>
+	<webflow:flow-registry id="flowRegistry">
+		<webflow:flow-location path="/WEB-INF/flows/skinmanager-main-flow.xml" id="skinmanager-main-flow"/>
+		<webflow:flow-location path="/WEB-INF/flows/skinmanager-detail-flow.xml" id="skinmanager-detail-flow"/>
+		<webflow:flow-location path="/WEB-INF/flows/skinmanager-new-flow.xml" id="skinmanager-new-flow"/>
+	</webflow:flow-registry>
+
+	<webflow:flow-builder-services id="flowBuilderServices"
+																 view-factory-creator="viewFactoryCreator"/>
+
+
+	<bean id="viewFactoryCreator" class="org.springframework.webflow.mvc.builder.MvcViewFactoryCreator">
+		<property name="viewResolvers" ref="viewResolver" />
 	</bean>
 
 	<import resource="flows/skinmanager-beans.xml" />

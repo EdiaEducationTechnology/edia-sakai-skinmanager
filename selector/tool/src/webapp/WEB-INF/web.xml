@@ -51,13 +51,4 @@
 		<url-pattern>*.spring</url-pattern>
 	</servlet-mapping>
 
-	<!-- Sakai context loader -->
-	<listener>
-		<listener-class>org.sakaiproject.util.ContextLoaderListener</listener-class>
-	</listener>
-	<!-- Sakai tool listener -->
-	<listener>
-		<listener-class>org.sakaiproject.util.ToolListener</listener-class>
-	</listener>
-
 </web-app>
